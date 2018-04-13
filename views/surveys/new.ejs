@@ -13,20 +13,34 @@
           <input type="text" class="form-control" name="name" required>
         </div>
         <div class="form-group">
-          <label for="description">Survey Description</label> <br></br>
+          <label for="description">Survey Description</label> 
           <textarea class="form-control" name="description" rows="5" required></textarea>
         </div>
         
         <div class="form-group">
-          <label for="startdate">Start Date</label> <br></br>
+          <label for="startdate">Start Date</label> 
           <input id="date" name="startdate" type="date">
         </div>
         
         <div class="form-group">
-          <label for="enddate">End Date</label> <br></br>
+          <label for="enddate">End Date</label> 
           <input id="date" name="enddate" type="date">
         </div>
         
+        
+        <fieldset>
+          <legend>More Options</legend>
+          <div class="form-group">
+            <input type="checkbox" id="featuredSurveys" name="featuredSurveys" value="featuredSurveys">
+            <label for="featuredSurveys">Add to Featured Surveys</label>
+          </div>
+          
+          <div class="form-group">
+          <label for="topic">Survey Topic (Optional)</label>
+          <input type="topic" class="form-control" name="topic" value="">
+        </div>
+          
+        </fieldset>
         <br></br>
         
         <!--<p>Start Date: <input type = "text"></p>-->

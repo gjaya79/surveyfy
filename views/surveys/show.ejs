@@ -5,6 +5,15 @@
         <h1><%= survey.name %></h1>
         <p><%= survey.description %></p>
         <p><em>Created by - <%= survey.author.firstName %>, <%= moment(survey.createdAt).fromNow() %></em></p>
+        
+        
+        
+        <% if (survey.startdate && survey.enddate) { %>
+        
+        <p><em>Start Date - <%= survey.startdate %>, End Date - <%= survey.enddate %></em></p>
+        
+        <% } %>
+        
         <!--// currentUser is checking if some one is logged in before working on showing edit or delete-->
         <% if(currentUser && survey.author.id.equals(currentUser._id)) { %> <!--// setup for currentUser._id is in app.js-->
             <p><a class="btn btn-outline-success float-right" href="/surveys/<%= survey._id %>/edit">Edit Survey</a></p>
@@ -47,6 +56,9 @@
                             <form action="/surveys/<%= survey._id %>/questions/<%= question._id %>?_method=DELETE" method="post">
                                 <button class="btn btn-outline-danger float-right">Delete</button>
                             </form>
+                            
+                            
+                            
                         <% } %>
                     
                     </div>
