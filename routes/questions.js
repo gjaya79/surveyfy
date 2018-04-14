@@ -3,6 +3,33 @@ var router  = express.Router({mergeParams: true}) // mergeParams used to merge q
 var Survey  = require("../models/survey")
 var Question = require("../models/question")
 var middleware = require("../middleware/index")
+var multer = require('multer');
+var key = 229969594374753
+var route_s = "s-6GAFgsBTEi4JTihe0Bv8d9IJI"
+
+// Multer & Cloudinary Config
+var storage = multer.diskStorage({
+  filename: function(req, file, callback) {
+    callback(null, Date.now() + file.originalname);
+  }
+});
+
+var imageFilter = function (req, file, cb) {
+    // accept image files only
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+        return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
+};
+
+var upload = multer({ storage: storage, fileFilter: imageFilter})
+
+var cloudinary = require('cloudinary');
+cloudinary.config({ 
+  cloud_name: 'surveyfy', 
+  api_key: key, 
+  api_secret: route_s
+});
 
 // QUESTION ROUTES
 
@@ -18,17 +45,27 @@ router.get("/new", middleware.isLoggedIn,function(req, res) {
 })
 
 // QUESTION - Create add new question to survey
-router.post("/", middleware.isLoggedIn, function(req, res) {
-    Survey.findById(req.params.id, function(err, survey) {
+router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, res) { // }) -1
+    
+    Survey.findById(req.params.id, function(err, survey) { // }) -2 
         if (err) {
             console.log(err)
             res.redirect("/surveys")
-        } else {
+        } else { // } -3
+            cloudinary.uploader.upload(req.file.path, function(result) { // }) -4
+              // add cloudinary url for the image to the question object under image property
+              req.body.question.image = result.secure_url;
+              // add author to question
+            //   req.body.question.author = {
+            //     id: req.user._id,
+            //     username: req.user.username
+            //  }
             // create new question
-            Question.create(req.body.question, function(err, question) {
+            Question.create(req.body.question, function(err, question) { // -5
                 if (err) {
                     req.flash("error", "The Create Operation not Successful.")
                     console.log(err)
+                    return res.redirect("back")
                 } else {
                     // add new question to survey
                     // ADD - USERNAME & ID TO QUESTION
@@ -45,10 +82,14 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
                     req.flash("success", "Successfully Created a Question.")
                     res.redirect("/surveys/" + survey._id)
                 }
-            })
-        }
-    })
-})
+            }) // -5
+            
+            }) // }) -4
+            
+        } // } -3
+        
+            }) // }) -2
+    }) // }) -1
 
 // EDIT - Question Route Edit
 router.get("/:question_id/edit", middleware.checkQuestionOwnership, function(req, res){

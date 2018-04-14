@@ -4,15 +4,20 @@
     <div class="card card-body">
       <h3 class="text-left text-uppercase"><em>Add Question to: </em><%= survey.name %> </h3>
       <br></br>
-      <form action="/surveys/<%= survey._id %>/questions" method="post">
+      <form action="/surveys/<%= survey._id %>/questions" method="post" enctype="multipart/form-data">
         <div class="form-group">
           <label for="name">Question Text</label>
           <input type="text" class="form-control" name="question[text]" required>
         </div>
         
         <div class="form-group">
-          <label for="name">Directions</label>
-          <input type="text" class="form-control" name="question[directions]" required>
+          <label for="name">Instructions</label>
+          <input type="text" class="form-control" name="question[instruction]">
+        </div>
+        
+        <div class="form-group">
+          <label for="image">Image</label>
+          <input type="file" id="image" class="form-control" name="image" accept="image/*">
         </div>
         
         <br></br>
@@ -42,5 +47,30 @@
     </div>
   </div>
 </div>
+
+
+
+<!--    <div class="row">-->
+<!--        <h1 style="text-align: center">Create a New Campground</h1>-->
+<!--        <div style="width: 30%; margin: 25px auto;">-->
+<!--            <form action="/campgrounds" method="POST" enctype="multipart/form-data">-->
+<!--                <div class="form-group">-->
+<!--                    <input class="form-control" type="text" name="campground[name]" placeholder="name">-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="image">Image</label>-->
+<!--                    <input type="file" id="image" name="image" accept="image/*" required>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <input class="form-control" type="text" name="campground[description]" placeholder="description">-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <button class="btn btn-lg btn-primary btn-block">Submit!</button>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--            <a href="/campgrounds">Go Back</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
 
 <% include ../partials/footer %>

@@ -11,10 +11,16 @@ var express         = require("express"),
     seedDB          = require("./seeds"),
     flash           = require("connect-flash")
     
+// Env config
+require('dotenv').config()
+    
 // Routes access
 var questionRoutes   = require("./routes/questions"),
     surveyRoutes     = require("./routes/surveys"),
     indexRoutes       = require("./routes/index")
+    
+    
+
     
 
 // Setting and Connecting Database
