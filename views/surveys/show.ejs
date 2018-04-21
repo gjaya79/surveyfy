@@ -15,7 +15,7 @@
         <% } %>
         
         <!--// currentUser is checking if some one is logged in before working on showing edit or delete-->
-        <% if(currentUser && survey.author.id.equals(currentUser._id)) { %> <!--// setup for currentUser._id is in app.js-->
+        <% if(currentUser && survey.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %> <!--// setup for currentUser._id is in app.js-->
             <p><a class="btn btn-outline-success float-right" href="/surveys/<%= survey._id %>/edit">Edit Survey</a></p>
             <form id="delete-inline" action="/surveys/<%= survey._id %>?_method=DELETE" method="post">
                 <button class="btn btn-outline-danger float-right">Delete</button>
@@ -52,7 +52,7 @@
                     <br></br>
                     
                     <div class="col-md-12">
-                        <% if(currentUser && question.author.id.equals(currentUser._id)) {%>
+                        <% if(currentUser && question.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) {%>
                                 <p><a class="btn btn-outline-success float-right" href="/surveys/<%= survey._id %>/questions/<%= question._id %>/edit">Edit Question</a></p>
                             <br></br>
                             <form action="/surveys/<%= survey._id %>/questions/<%= question._id %>?_method=DELETE" method="post">

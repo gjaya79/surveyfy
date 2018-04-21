@@ -16,7 +16,7 @@ middlewareAuth.checkSurveyOwnership = function(req, res, next) {
                 res.redirect("back")
             }
             else {
-                if(foundSurvey.author.id.equals(req.user._id)) {
+                if(foundSurvey.author.id.equals(req.user._id) || req.user.isAdmin) {
                     next() // moves and links to update or delete 
                 } else {
                     req.flash("error", "Permission Denied.")
@@ -48,7 +48,7 @@ middlewareAuth.checkQuestionOwnership = function(req, res, next) {
                 res.redirect("back")
             }
             else {
-                if(foundQuestion.author.id.equals(req.user._id)) {
+                if(foundQuestion.author.id.equals(req.user._id) || req.user.isAdmin) {
                     next() // moves and links to update or delete 
                 } else {
                     req.flash("error", "Permission Denied.")

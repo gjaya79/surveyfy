@@ -5,7 +5,11 @@ var userSchema = mongoose.Schema({
     firstName: String,
     lastName: String,
     username: String,
-    password: String
+    password: String, 
+    isAdmin: {
+        type: Boolean,
+        default: false
+    }
 })
 
 // all methods or functionalities will be provided to user model to get the security
