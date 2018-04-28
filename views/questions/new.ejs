@@ -1,9 +1,132 @@
 <% include ../partials/header %>
+
+<div class="container">
 <div class="row">
-  <div class="col-md-6 mx-auto">
+<div id="TypeChosing" class="col-sm-6 mx-auto">      
     <div class="card card-body">
       <h3 class="text-left text-uppercase"><em>Add Question to: </em><%= survey.name %> </h3>
       <br></br>
+      
+      <div id="Multiple_Choice_Group"> 
+        <h4 class="text-left">Multiple Choice</h4>
+          <button id="btnSingle" type="button" onclick="displayRadiobox()" class="btn btn-primary mb1 bg-teal">Single Select</button>
+          <button id="btnMult" type="button" onclick="displayCheckbox()" class="btn btn-primary mb1 bg-teal">Multiple Select</button>
+        </div>
+      
+        <br></br>
+        
+      <div id="Textbox_Group">
+        <h4 class="text-left">Open Text Field Choice</h4>
+        <button id="btnTxtBox" type="button" onclick="displayTextbox()" class="btn btn-primary mb1 bg-teal">Textbox</button>
+        <button id="btnMultTxt" type="button" onclick="displayMultLineTextbox()" class="btn btn-primary mb1 bg-teal">Mult Lines of Textboxes</button>
+        <button id="btnTxtList" type="button" onclick="displayLineListTextbox()" class="btn btn-primary mb1 bg-teal"> List of Textboxes</button>
+      </div>
+      <br></br>
+      
+      <div id="Rating_Group">
+        <h4 class="text-left">Rating & Ranks</h4>
+         <button id="btnRateScale" type="button" onclick="displayRatingScale()" class="btn btn-primary mb1 bg-teal">Rating Scale</button>
+         <button id="btnRateSilder" type="button" onclick="displaySilder()" class="btn btn-primary mb1 bg-teal">Rating Silder</button>
+      </div>
+      <br></br>
+      
+      <body>
+      <div id="Preview_Radio">
+        <h5 class="text-left">Single Select</h5>
+        Single Select can let user to choose only one answer which already provided by the survey.
+        <br></br>
+        <p>
+          <input type="radio" id="test1" name="radio-group" checked>
+          <label for="test1">Apple</label>
+        </p>
+        <p>
+          <input type="radio" id="test2" name="radio-group">
+          <label for="test2">Peach</label>
+        </p>
+        <p>
+          <input type="radio" id="test3" name="radio-group">
+          <label for="test3">Orange</label>
+        </p>
+      <br></br>
+      </div>
+      
+      <div id="Preview_Checkbox" style="display: none;">
+        <h5 class="text-left">Multiple Select</h5>
+        Multiple Selection questions are similar to Multiple Choice questions. However, questions can have more than one correct answer. You can create as many choices as necessary. 
+        <p>
+          <input type="checkbox"  name="checbox_group-group" checked>
+          <label>Apple</label>
+        </p>
+        <p>
+          <input type="checkbox" name="checbox_group-group" checked>
+          <label>Peach</label>
+        </p>
+        <p>
+          <input type="checkbox" name="checbox_group-group">
+          <label>Orange</label>
+        </p>
+        <br></br>
+         
+      </div>
+      
+      <div id="Preview_SingleLineText" style="display: none;">
+        <h5 class="text-left">Single line text</h5>
+        A Text Field provided for user to enter with only single line of words.
+        <input type="text" value="" >
+        </textarea>
+      </div>
+       
+      <div id="Preview_MultLineTxt" style="display: none;">
+        <h5 class="text-left">Multiple Line of text</h5>
+        A Text Field provided for user to enter with multple lines of words.
+        <textarea rows="4" cols="50"></textarea>
+      </div>
+      
+      <div id="Preview_LineList" style="display: none;">
+        <h5 class="text-left">List of textboxs</h5>
+        A list of textboxs which can let users to enter multiple lines of words.
+        <input type="text" value="" >
+        <input type="text" value="" >
+        <input type="text" value="" >
+      </div>
+      
+      <div id="Preview_RatingScale" style="display: none;">
+        <h5 class="text-left">Rating Scale</h5>
+        Choosing one of the block provided.
+        <div class="rating">
+          <span><input type="radio" name="rating" id="str5" value="5"><label for="str5">Excellent</label></span>
+          <span><input type="radio" name="rating" id="str4" value="4"><label for="str4">Good</label></span>
+          <span><input type="radio" name="rating" id="str3" value="3"><label for="str3">Fair</label></span>
+          <span><input type="radio" name="rating" id="str2" value="2"><label for="str2">Poor</label></span>
+          <span><input type="radio" name="rating" id="str1" value="1"><label for="str1">Bad</label></span>
+        </div>
+      </div>
+      
+      <div id="Preview_Silder" style="display: none;">
+        <h5 class="text-left">Silder</h5>
+        Draging the button to rate one stuff.
+        <input type="range" min="1" max="100" value="50">
+      </div>
+      
+      </body>
+      <!--<form action="/surveys/<%= survey._id %>/questions" method="post" enctype="multipart/form-data">-->
+      <!--  <div class="form-group">-->
+      <!--    <label for="name">Question Text</label>-->
+      <!--    <input type="text" class="form-control" name="question[text]" required>-->
+      <!--  </div>-->
+        
+      <!--  <div class="form-group">-->
+      <!--    <label for="name">Instructions</label>-->
+      <!--    <input type="text" class="form-control" name="question[instruction]">-->
+      <!--  </div>-->
+      <!--</form>-->
+      
+      </div>  
+    </div>
+    
+    
+    <div id="QuestionEdit" class ="col-sm-6 mx-auto">
+      <div class="card card-body">
       <form action="/surveys/<%= survey._id %>/questions" method="post" enctype="multipart/form-data">
         <div class="form-group">
           <label for="name">Question Text</label>
@@ -22,23 +145,37 @@
         
         <br></br>
         <br></br>
-        
         <p>Options: </p>
         
-        <div class="form-group">
-          <label for="option1">Answer 1</label>
-          <input type="text" class="form-control" name="option1">
+        <div class="form-group" id="single_select">
+          <div class="form-group" id="radio_group">
+            <label for="option1">Answer 1</label>
+            <input type="text" class="form-control" name="option1">
+            
+            <label for="option2">Answer 2</label>
+            <input type="text" class="form-control" name="option2">
+            
+          </div>
+          <button id="addButton_single_select" onclick="addNewInputRadioText()" type="button" onclick="addNewInputRadioText()" class="btn btn-primary mb1 bg-teal">Add</button>
         </div>
         
-        <div class="form-group">
-          <label for="option2">Answer 2</label>
-          <input type="text" class="form-control" name="option2">
-        </div>
+        <!--<div class="form-group" id="multiple_select" style="display: none;">-->
+        <!--   <div class="form-group" id="checbox_group">-->
+        <!--    <li class="item-left">-->
+        <!--    <input type="checkbox" checked>-->
+        <!--    </li>-->
+            <!--<label for="option1">Answer 1</label>-->
+        <!--    <input type="text" class="form-control" name="option1" placeholder="Answer 1">-->
+        <!--    <li class="item-left">-->
+        <!--     <input type="checkbox" checked>-->
+        <!--    </li>-->
+            <!--<label for="option2">Answer 2</label>-->
+        <!--    <input type="text" class="form-control" name="option2" placeholder="Answer 2">-->
+        <!--  </div>-->
+        <!--  <button id="addButton_multiple_select"  onclick="addNewInputCheckboxText()" type="button" onclick="addNewInputCheckboxText()" class="btn btn-primary mb1 bg-teal">Add</button>-->
+        <!--</div>-->
+       
         
-        <div class="form-group">
-          <label for="option3">Answer 3</label>
-          <input type="text" class="form-control" name="option3">
-        </div>
         
         <button type="submit" class="btn btn-primary float-right">Create Question</button>
         
@@ -47,30 +184,142 @@
     </div>
   </div>
 </div>
+</div>
 
+<script>
+  var checkbox = document.getElementById("multiple_select");
+  var radiobox = document.getElementById("single_select");
+  var checkboxGroup = document.getElementById("checbox_group");
+  var radioboxGroup = document.getElementById("radio_group");
+  
+  var radioboxPreview = document.getElementById("Preview_Radio");
+  var checkboxPreview = document.getElementById("Preview_Checkbox");
+  var singleLinePreview = document.getElementById("Preview_SingleLineText");
+  var multLinePreview = document.getElementById("Preview_MultLineTxt");
+  var lineListPreview = document.getElementById("Preview_LineList");
+  var ratingScalePreview = document.getElementById("Preview_RatingScale");
+  var sliderPreview = document.getElementById("Preview_Silder");
+  
+   function displayRadiobox(){
+    radiobox.style.display = "block";
+    
+    radioboxPreview.style.display = "block";
+    checkboxPreview.style.display = "none";
+    singleLinePreview.style.display = "none";
+    multLinePreview.style.display = "none";
+    lineListPreview.style.display = "none";
+    ratingScalePreview.style.display = "none";
+    sliderPreview.style.display = "none";
+      
+  }
 
-
-<!--    <div class="row">-->
-<!--        <h1 style="text-align: center">Create a New Campground</h1>-->
-<!--        <div style="width: 30%; margin: 25px auto;">-->
-<!--            <form action="/campgrounds" method="POST" enctype="multipart/form-data">-->
-<!--                <div class="form-group">-->
-<!--                    <input class="form-control" type="text" name="campground[name]" placeholder="name">-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <label for="image">Image</label>-->
-<!--                    <input type="file" id="image" name="image" accept="image/*" required>-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <input class="form-control" type="text" name="campground[description]" placeholder="description">-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <button class="btn btn-lg btn-primary btn-block">Submit!</button>-->
-<!--                </div>-->
-<!--            </form>-->
-<!--            <a href="/campgrounds">Go Back</a>-->
-<!--        </div>-->
-<!--    </div>-->
-
-
+  function displayCheckbox(){
+    radiobox.style.display = "block";
+    
+    radioboxPreview.style.display = "none";
+    checkboxPreview.style.display = "block";
+    singleLinePreview.style.display = "none";
+    multLinePreview.style.display = "none";
+    lineListPreview.style.display = "none";
+    ratingScalePreview.style.display = "none";
+    sliderPreview.style.display = "none";
+  }
+  
+   function displayTextbox(){
+    radiobox.style.display = "none";
+    
+    radioboxPreview.style.display = "none";
+    checkboxPreview.style.display = "none";
+    singleLinePreview.style.display = "block";
+    multLinePreview.style.display = "none";
+    lineListPreview.style.display = "none";
+    ratingScalePreview.style.display = "none";
+    sliderPreview.style.display = "none";
+   }
+   
+   function displayMultLineTextbox(){
+     radiobox.style.display = "none"; 
+     
+    radioboxPreview.style.display = "none";
+    checkboxPreview.style.display = "none";
+    singleLinePreview.style.display = "none";
+    multLinePreview.style.display = "block";
+    lineListPreview.style.display = "none";
+    ratingScalePreview.style.display = "none";
+    sliderPreview.style.display = "none";
+   }
+   
+   function displayLineListTextbox(){
+    radiobox.style.display = "block"; 
+     
+    radioboxPreview.style.display = "none";
+    checkboxPreview.style.display = "none";
+    singleLinePreview.style.display = "none";
+    multLinePreview.style.display = "none";
+    lineListPreview.style.display = "block";
+    ratingScalePreview.style.display = "none";
+    sliderPreview.style.display = "none";
+   }
+   
+   function displayRatingScale(){
+    radiobox.style.display = "none"; 
+     
+    radioboxPreview.style.display = "none";
+    checkboxPreview.style.display = "none";
+    singleLinePreview.style.display = "none";
+    multLinePreview.style.display = "none";
+    lineListPreview.style.display = "none";
+    ratingScalePreview.style.display = "block";
+    sliderPreview.style.display = "none";
+   }
+   
+   function displaySilder(){
+    radiobox.style.display = "none"; 
+     
+    radioboxPreview.style.display = "none";
+    checkboxPreview.style.display = "none";
+    singleLinePreview.style.display = "none";
+    multLinePreview.style.display = "none";
+    lineListPreview.style.display = "none";
+    ratingScalePreview.style.display = "none";
+    sliderPreview.style.display = "block";
+   }
+   
+  function addNewInputRadioText(){
+    // val = optionRadioHTML;
+    // radio_group.append(val);
+    var div = document.createElement('divNewRadio');
+    
+    div.classname = 'newRadio';
+    
+    div.innerHTML =  '<div class="form-group">'+
+                    '<label for="option1">New Answer</label>'+
+                    '<input type="text" class="form-control" name="option">'+
+                    ' <input type="button" value="remove" onclick="removeNewRadio(this)">'
+                    '</div>';
+    
+    radioboxGroup.appendChild(div);
+  }
+  
+  function removeNewRadio(input){
+    radioboxGroup.removeChild(input.parentNode.parentNode);
+  }
+   
+  // function addNewInputCheckboxText(){
+  //   // val = optionCheckboxHTML
+  //   // radio_group.append(val);
+  //   var div = document.createElement('divNewCheckbox');
+  //   div.innerHTML = '<div class="form-group">'+
+  //                         '<label for="option1">New Answer</label>'+
+  //                         '<input type="text" class="form-control" name="option">' +
+  //                         ' <input type="button" value="remove" onclick="removeNewCheckbox(this)">'+
+  //                         '</div>';
+  //   checbox_group.appendChild(div);
+  // }
+  
+  function removeNewCheckbox(input){
+    checbox_group.removeChild(input.parentNode.parentNode);
+  }
+    
+</script>
 <% include ../partials/footer %>

@@ -25,3 +25,21 @@ main {
     color: #fff;
 }
 
+.btn-warning {
+    color: #fff;
+}
+
+input[type="checkbox"] {
+    position:absolute;
+    clip: rect(0,0,0,0);
+    clip: rect(0 0 0 0);
+}
+
+#foo:checked,
+input[type="checkbox"] + label::before {
+    content: url('checkbox.png');
+}
+
+input[type="checkbox"]:checked + label::before {
+    content: url('checkbox-checked.png');
+}

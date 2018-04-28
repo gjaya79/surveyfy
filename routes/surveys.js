@@ -57,6 +57,17 @@ router.get("/new", middleware.isLoggedIn, function(req, res) {
     res.render("surveys/new")
 })
 
+// Survey Form - Route for Survey report
+router.get("/report", middleware.isLoggedIn, function(req, res) {
+    Survey.find({}, function(error, allSurveys) {
+        if (error) {
+            console.log(error)
+        } else {
+            res.render("surveys/report", {surveys: allSurveys})
+        }
+    })
+})
+
 // Show Survey - Route for displaying a individual Survey
 router.get("/:id",  function(req, res) {
     Survey.findById(req.params.id).populate("questions").exec( function(error, foundSurvey) {
