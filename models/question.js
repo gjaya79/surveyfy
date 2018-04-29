@@ -12,6 +12,10 @@ var questionSchema = mongoose.Schema({
         },
         username: String,
         firstName: String
+    },
+    types:{
+        type:Number,
+        default:1
     }
 })
 

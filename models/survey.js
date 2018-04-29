@@ -7,6 +7,10 @@ var surveySchema = new mongoose.Schema({
     createdAt: {type: Date, default: Date.now},
     startdate: String,
     enddate: String,
+    isPublished: {
+        type: Boolean,
+        default: false
+    },
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
