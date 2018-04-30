@@ -1,8 +1,11 @@
-var express = require("express")
-var router  = express.Router()
-var passport = require("passport")
-var User    = require("../models/user")
-var Survey  = require("../models/survey")
+var express     = require("express")
+var router      = express.Router()
+var passport    = require("passport")
+var User        = require("../models/user")
+var Survey      = require("../models/survey")
+var async       = require("async")
+var crypto      = require("crypto")
+var nodemailer  = require("nodemailer")
 
 // Routes
 
@@ -56,6 +59,8 @@ router.post("/register", function(req, res) {
     })
 })
 
+var GMAILPW = "umasssurvey"
+
 // Login Form
 router.get("/login", function(req, res) {
     res.render("login")
@@ -65,7 +70,9 @@ router.get("/login", function(req, res) {
 // passport.authenticate() - is the middleware
 router.post("/login", passport.authenticate("local", {
     successRedirect: "/surveys",
-    failureRedirect: "/login"
+    failureRedirect: "/login",
+    failureFlash: true,
+    successFlash: "Welcome to Surveyfy!"
 }),function(req, res) {
 })
 
@@ -74,6 +81,125 @@ router.get("/logout", function(req, res) {
     req.logout()
     req.flash("success", "Logged Out")
     res.redirect("/")
+})
+
+// Forgot Password - route
+router.get("/forgot_password", function(req, res) {
+    res.render("forgot_password")
+})
+
+// Forgot Password Post Method - route
+router.post('/forgot_password', function(req, res, next) {
+    async.waterfall([
+        function(done) {
+            crypto.randomBytes(20, function(err, buf) {
+                var token = buf.toString('hex')
+                done(err, token)
+            })
+        },
+        function(token, done) {
+            User.findOne({username: req.body.username}, function(err, user) {
+                if (!user) {
+                    req.flash('error', "Email Address Doesn't Exist.")
+                    return res.redirect('/forgot_password')
+                }
+                user.resetPasswordToken = token
+                user.resetPasswordExpires = Date.now() + 3600000 // The token link expires after an hour
+                
+                user.save(function(err) {
+                    done(err, token, user)
+                })
+            })
+        },
+        function(token, user, done) {
+            var smtpTransport = nodemailer.createTransport({
+                service: 'Gmail',
+                auth: {
+                    user: "surveyfymass@gmail.com", // change the email address here. 
+                    pass: GMAILPW // Change if problem
+                }
+            })
+            var mailOptions = {
+                to: user.username,
+                from: "surveyfymass@gmail.com",
+                subject: "Surveyfy Password Reset Request",
+                text: "You are receiving this because you (or someone else) have requested the password reset for your account.\n\n" +
+                    "Please click on the following link, or paste this into your browser to successfully complete the process:\n\n" +
+                    "http://" + req.headers.host + "/reset/" + token + "\n\n" +
+                    "If you did not request this, please ignore this email and your password will remain unchanged.\n"
+            }
+            smtpTransport.sendMail(mailOptions, function(err) {
+                console.log('Mail Sent')
+                req.flash("success", "An e-mail has been sent to " + user.username + " with further instructions.")
+                done(err, 'done')
+            })
+        }
+        
+    ], function(err) {
+        if (err) return next(err)
+        res.redirect('/forgot_password')
+    })
+})
+
+// Reset Password - Route
+router.get("/reset/:token", function(req, res) {
+    User.findOne({resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() }}, function(err, user) {
+        if (!user) {
+            req.flash('error', 'Password reset token is invalid or has expired.')
+            return res.redirect('/forgot_password')
+        }
+        res.render('reset', {token: req.params.token})
+    })
+})
+
+router.post("/reset/:token", function(req, res) {
+    async.waterfall([
+    function(done) {
+      User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+        if (!user) {
+          req.flash('error', 'Password reset token is invalid or has expired.');
+          return res.redirect('back');
+        }
+        if(req.body.password === req.body.confirm) {
+          user.setPassword(req.body.password, function(err) {
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpires = undefined;
+
+            user.save(function(err) {
+              req.logIn(user, function(err) {
+                done(err, user);
+              });
+            });
+          })
+        } else {
+            req.flash("error", "Passwords do not match.");
+            return res.redirect('back');
+        }
+      });
+    },
+    function(user, done) {
+      var smtpTransport = nodemailer.createTransport({
+        service: 'Gmail', 
+        auth: {
+          user: "surveyfymass@gmail.com", // change the email address here. 
+          pass: GMAILPW // Change if problem
+        }
+      });
+      var mailOptions = {
+        to: user.username,
+        from: "surveyfymass@gmail.com",
+        subject: 'Your password has been changed',
+        text: 'Hello,\n\n' +
+          'This is a confirmation that the password for your account ' + user.username + ' has just been changed.\n'
+      };
+      smtpTransport.sendMail(mailOptions, function(err) {
+        req.flash('success', 'Success! Your password has been changed.');
+        done(err);
+      });
+    }
+  ], function(err) {
+    res.redirect('/');
+  });
 })
 
 
