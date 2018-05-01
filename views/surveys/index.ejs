@@ -5,6 +5,14 @@
          <div class="container">
          <h1>Dashboard</h1>
          <h3>List of our surveys</h3>
+         <p>
+             <form class="form-inline" action="/surveys" method="GET">
+                 <div class="form-group">
+                     <input type="text" class="form-control" name="search" placeholder="Search Surveys">
+                     <input type="submit" class="form-control btn btn-default" value="Search">
+                 </div>
+             </form>
+         </p>
          </div>
      </header>
 
@@ -57,6 +65,9 @@
     
     
     <div class="row text-left" style="display:flex; flex-wrap: wrap;">
+        
+    
+        
     <table id="SurveyList">
       <tr>
         <th>Name</th>

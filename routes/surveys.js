@@ -5,15 +5,33 @@ var middleware = require("../middleware/index") // "../middleware" is fine coz o
 
 // Display - Route for Surveys
 router.get("/", middleware.isLoggedIn,function(req, res) {
-    // Get all surveys from database
-    Survey.find({}, function(error, allSurveys) {
-        if (error) {
-            console.log(error)
-        } else {
-            res.render("surveys/index", {surveys: allSurveys})
-        }
-    })
-    
+    var noMatch = null;
+    // To display the Survey searched by the user
+    if (req.query.search) {
+        // Get all survey from search string
+        const regex = new RegExp(escapeRegex(req.query.search), 'gi'); // g - global, i - ignore case
+        Survey.find({name: regex}, function(error, allSurveys) {
+            if (error) {
+                console.log(error)
+            } else {
+                
+                 if(allSurveys.length < 1) {
+                  noMatch = "No campgrounds match that query, please try again.";
+                  
+              }
+                res.render("surveys/index", {surveys: allSurveys, noMatch: noMatch})
+            }
+        })
+    } else {
+        // Get all surveys from database
+        Survey.find({}, function(error, allSurveys) {
+            if (error) {
+                console.log(error)
+            } else {
+                res.render("surveys/index", {surveys: allSurveys})
+            }
+        })
+    }
 })
 
 // Create - Route for Creating Surveys
@@ -114,7 +132,10 @@ router.delete("/:id", middleware.checkSurveyOwnership, function(req, res) {
     })
 })
 
-
+function escapeRegex(text) {
+    // Matches any number of characters globally
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 
 module.exports = router
