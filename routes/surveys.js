@@ -46,8 +46,25 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
         firstName: req.user.firstName
     }
     
+    var topic = req.body.topic
     
-    var newSurvey = {name: name, description: description, startdate, enddate, author: author}
+    // Check to ensure if the survey added to featured surveys
+    let featuredSurveys;
+    if (req.body.featuredSurveys) {
+        featuredSurveys = true
+    } else {
+        featuredSurveys = false
+    }
+    
+    // Check to ensure if the survey added as a public survey
+    let publicSurvey;
+    if (req.body.publicSurvey) {
+        publicSurvey = true
+    } else {
+        publicSurvey = false
+    }
+    
+    var newSurvey = {name: name, description: description, startdate, enddate, author: author, topic: topic, featuredSurveys: featuredSurveys, publicSurvey: publicSurvey}
     
     
     

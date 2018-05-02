@@ -7,10 +7,15 @@ var surveySchema = new mongoose.Schema({
     createdAt: {type: Date, default: Date.now},
     startdate: String,
     enddate: String,
-    isPublished: {
+    featuredSurveys: {
         type: Boolean,
         default: false
     },
+    publicSurvey: {
+        type: Boolean,
+        default: false
+    },
+    topic: String,
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,

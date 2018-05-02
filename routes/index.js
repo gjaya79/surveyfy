@@ -12,7 +12,9 @@ var nodemailer  = require("nodemailer")
 // Index - Route for Index page
 router.get("/", function(req, res) {
     // Get all features surveys from database
-    Survey.find({}, function(error, allSurveys) {
+    
+    // $and: [ { <expression1> }, { <expression2> } , ... , { <expressionN> } ]
+    Survey.find({featuredSurveys: true, publicSurvey: true}, function(error, allSurveys) {
         if (error) {
             console.log(error)
         } else {
