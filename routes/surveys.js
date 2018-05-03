@@ -111,16 +111,28 @@ router.get("/report", middleware.isLoggedIn, function(req, res) {
     })
 })
 
-// Show Survey - Route for displaying a individual Survey
-router.get("/:id",  function(req, res) {
+// Show Survey - Route for displaying an individual Survey
+router.get("/:id", middleware.isLoggedIn, function(req, res) {
     Survey.findById(req.params.id).populate("questions").exec( function(error, foundSurvey) {
         if (error) {
             console.log(error)
         } else {
-            res.render("surveys/show", {survey: foundSurvey})
+            res.render("surveys/show", {survey: foundSurvey, routeParam: req.params})
         }
     })
     
+})
+
+// Respondent Survey Display - Route for displaying an individual Survey
+router.get("/response/:id", function(req, res) {
+    
+    Survey.findById(req.params.id).populate("questions").exec( function(error, foundSurvey) {
+        if (error) {
+            console.log(error)
+        } else {
+            res.render("respondents/respondent_answer", {survey: foundSurvey})
+        }
+    })
 })
 
 // EDIT - Survey Edit Route

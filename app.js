@@ -11,7 +11,7 @@ var express         = require("express"),
     seedDB          = require("./seeds"),
     flash           = require("connect-flash")
     
-// Env config
+// Environment config
 require('dotenv').config()
     
 // Routes access
@@ -26,8 +26,7 @@ var questionRoutes   = require("./routes/questions"),
 // Setting and Connecting Database
 mongoose.connect("mongodb://localhost/surveyfy_db")
 
-// Providing or adding saved data.
-// seedDB()
+
 
 // To use flash for notifications
 app.use(flash())

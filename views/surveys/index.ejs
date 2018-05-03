@@ -74,7 +74,7 @@
         <th>Created At</th>
         <th>End Date Extension</th>
         <th>Author</th>
-        <th>Link</th>
+        <!--<th>Link</th>-->
         <th></th>
       </tr>
        <% surveys.forEach(function(survey) { %>
@@ -83,7 +83,7 @@
            <td><%= survey.createdAt %></td>
            <td><%= survey.enddate %></td>
            <td><%= survey.author.firstName %></td>
-           <td>undefined</td>
+           <!--<td>undefined</td>-->
            <td>
               <div class="btn-toolbar" role="toolbar">
                   <% if(currentUser && survey.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>

@@ -17,6 +17,14 @@ var questionSchema = mongoose.Schema({
         type:Number,
         default:1
     },
+    silderMax:{
+        type:String,
+        default:0
+    },
+    silderMin:{
+       type:String,
+       default:100
+    },
     options:[{
         content: {
             type: String

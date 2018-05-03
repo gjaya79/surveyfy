@@ -133,11 +133,12 @@
         <br></br>
         <br></br>
         
+        <!--Display options with array number for editing-->
         <p>Options: </p>
         <div class="form-group" id="options_group">
         <% question.options.forEach(function(options) { %>
-          <label for="Newoption">Answer <%=options._id %> </label>
-          <input type="text" class="form-control" name="question[options][<%=options.count %>][content]" value="<%=options.content %>">
+          <label for="Newoption">Answer <%= question.options.indexOf(options) + 1%> </label>
+          <input type="text" class="form-control" name="question[options][<%=question.options.indexOf(options)%>][content]" value="<%=options.content %>">
           <script>addCounter();</script>
         <% }) %>
         </div>
@@ -145,8 +146,6 @@
         <input type="number" class="form-control" id="typeInput" value="1" name="question[types]" style="display: none;">
         
         <button type="submit" class="btn btn-primary float-right">Edit Question</button>
-        
-        <button type="submit" class="btn btn-primary float-right">Create Question</button>
         
         <a class="btn btn-secondary float-left" href="/surveys/<%= survey_id %>">Go Back</a>
       </form>

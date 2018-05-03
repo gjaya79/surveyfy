@@ -1,41 +1,33 @@
 <% include ../partials/header %>
 
+<div>
+<a class="btn btn-primary float-left prevnext" href="#">Previous</a>
+<a class="btn btn-primary float-right prevnext" href="#">Next</a>
+
+</div>
+
+<br></br>
+
 <div class="container">
     <div class="card card-body mb-2">
         <h1><%= survey.name %></h1>
         <p><%= survey.description %></p>
-        <p><em>Created by - <%= survey.author.firstName %>, <%= moment(survey.createdAt).fromNow() %></em></p>
+        <p><em>Created by - <%= survey.author.firstName %></em></p>
         
         
         
-        <% if (survey.startdate && survey.enddate) { %>
         
-        <p><em>Start Date - <%= survey.startdate %>, End Date - <%= survey.enddate %></em></p>
         
-        <% } %>
         
-        <p>Share: https://surveyfy-avinashbe.c9users.io/surveys/response/<%= routeParam.id %></p>
         
-        <!--// currentUser is checking if some one is logged in before working on showing edit or delete-->
-        <% if(currentUser && survey.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %> <!--// setup for currentUser._id is in app.js-->
-            <p><a class="btn btn-outline-success float-right" href="/surveys/<%= survey._id %>/edit">Edit Survey</a></p>
-            <div>
-                <a class=" btn btn-outline-secondary float-right" href="/surveys">Go Back</a>
-                <form id="delete-inline" action="/surveys/<%= survey._id %>?_method=DELETE" method="post">
-                    <button id ="btnRightSpacing" class="btn btn-outline-danger float-right">Delete</button>
-                </form>
-            </div>
-        <% } %>
+        
         
         
     </div>
     
     <br></br>
         <div class="card card-body mb-2 bg-light">
-            <% if(currentUser && survey.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) {%>
-            <p><a class="btn btn-primary float-right" href="/surveys/<%= survey._id %>/questions/new">Add Question</a></p>
-        
-            <% } %>
+            
             
             <br></br>
             <hr></hr>
@@ -104,19 +96,18 @@
                     <% } %>
                         
                      
-                    <!--button group place adjustment-->
-                    <div class="form-group">
-                        <% if(currentUser && question.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) {%>
-                            <a class="btn btn-outline-success float-right" href="/surveys/<%= survey._id %>/questions/<%= question._id %>/edit">Edit Question</a>
-                            <form action="/surveys/<%= survey._id %>/questions/<%= question._id %>?_method=DELETE" method="post">
-                                <button id ="btnRightSpacing" class="btn btn-outline-danger float-right">Delete</button>
-                            </form>
-                        <% } %>
-                    </div>
+                    
                     <br></br>
             <% }) %>
         </div>
     </div>
+    
 </div>
+
+<div class="container">
+    <a class="btn btn-primary float-right" href="/">Submit</a>
+</div>
+
+
 
 <% include ../partials/footer %>
