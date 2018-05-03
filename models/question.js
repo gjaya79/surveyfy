@@ -16,7 +16,12 @@ var questionSchema = mongoose.Schema({
     types:{
         type:Number,
         default:1
-    }
+    },
+    options:[{
+        content: {
+            type: String
+        }
+    }]
 })
 
 module.exports = mongoose.model("Question", questionSchema)

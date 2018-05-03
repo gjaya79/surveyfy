@@ -15,6 +15,10 @@ var surveySchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    hideRespondentsNav: {
+        type: Boolean,
+        default: false
+    },
     topic: String,
     author: {
         id: {

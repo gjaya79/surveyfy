@@ -26,14 +26,25 @@
         
         <fieldset>
           <legend>More Options</legend>
+          
           <div class="form-group">
-            <input type="checkbox" id="featuredSurveys" name="featuredSurveys" value="featuredSurveys">
+            <input type="checkbox" id="featuredSurveys" name="survey[featuredSurveys]" value="featuredSurveys" <% if (survey.featuredSurveys) { %> checked="checked" <%}%>>
             <label for="featuredSurveys">Add to Featured Surveys</label>
           </div>
           
           <div class="form-group">
+            <input type="checkbox" id="publicSurvey" name="survey[publicSurvey]" value="publicSurvey" <% if (survey.publicSurvey) { %> checked="checked" <%}%>>
+            <label for="publicSurvey">Make the Survey Public</label>
+          </div>
+          
+          <div class="form-group">
+            <input type="checkbox" id="hideRespondentsNav" name="survey[hideRespondentsNav]" value="hideRespondentsNav" <% if (survey.hideRespondentsNav) { %> checked="checked" <%}%>>
+            <label for="hideRespondentsNav">Hide Respondents UI Elements</label>
+          </div>
+          
+          <div class="form-group">
           <label for="topic">Survey Topic (Optional)</label>
-          <input type="topic" class="form-control" name="topic" value="">
+          <input type="topic" class="form-control" name="survey[topic]" value="<%= survey.topic %>">
         </div>
           
         </fieldset>

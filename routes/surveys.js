@@ -64,7 +64,15 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
         publicSurvey = false
     }
     
-    var newSurvey = {name: name, description: description, startdate, enddate, author: author, topic: topic, featuredSurveys: featuredSurveys, publicSurvey: publicSurvey}
+    // Check to ensure if the respondents should see UI elements or not
+    let hideRespondentsNav;
+    if (req.body.hideRespondentsNav) {
+        hideRespondentsNav = true
+    } else {
+        hideRespondentsNav = false
+    }
+    
+    var newSurvey = {name: name, description: description, startdate, enddate, author: author, topic: topic, featuredSurveys: featuredSurveys, publicSurvey: publicSurvey, hideRespondentsNav: hideRespondentsNav}
     
     
     

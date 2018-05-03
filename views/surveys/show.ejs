@@ -14,12 +14,17 @@
         
         <% } %>
         
+        
+        
         <!--// currentUser is checking if some one is logged in before working on showing edit or delete-->
         <% if(currentUser && survey.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %> <!--// setup for currentUser._id is in app.js-->
             <p><a class="btn btn-outline-success float-right" href="/surveys/<%= survey._id %>/edit">Edit Survey</a></p>
-            <form id="delete-inline" action="/surveys/<%= survey._id %>?_method=DELETE" method="post">
-                <button class="btn btn-outline-danger float-right">Delete</button>
-            </form>
+            <div>
+                <a class=" btn btn-outline-secondary float-right" href="/surveys">Go Back</a>
+                <form id="delete-inline" action="/surveys/<%= survey._id %>?_method=DELETE" method="post">
+                    <button class="btn btn-outline-danger float-right">Delete</button>
+                </form>
+            </div>
         <% } %>
         
         
@@ -50,6 +55,48 @@
                     <img class="img-responsive" src="<%= question.image %>">
                     
                     <br></br>
+                    
+                    <!--display options:-->
+                    <br></br>
+                    
+                    <!--display question preview based on types, with if statement-->
+                    <% if (question.types == 1) { %>
+                        <div>
+                            <% question.options.forEach(function(options) { %>
+                                <p>
+                                  <input type="radio" name="radio-group">
+                                  <label><%= options.content %></label>
+                                </p>
+                            <% }) %>
+                        </div>
+                    <% } else if (question.types == 2) { %>
+                        <% question.options.forEach(function(options) { %>
+                        <div>
+                            <p>
+                              <input type="checkbox"  name="checbox_group-group" checked>
+                              <label><%= options.content %></label>
+                            </p>
+                        <% }) %>
+                        </div>
+                    <% } else if(question.types == 3){ %>
+                        <div>
+                            <input type="text" value="" >
+                            </textarea>
+                        </div>
+                    <% } else if(question.types == 4){ %>
+                        <div>
+                            <textarea rows="4" cols="50"></textarea>
+                            </textarea>
+                        </div>
+                     <% } else if (question.types == 5) { %>
+                        <div>
+                        <% question.options.forEach(function(options) { %>
+                            <p>
+                              <input type="text" value="" >
+                            </p>
+                         <% }) %>
+                        </div>
+                    <% } %>
                     
                     <div class="col-md-12">
                         <% if(currentUser && question.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) {%>
