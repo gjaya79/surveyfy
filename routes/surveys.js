@@ -145,9 +145,51 @@ router.get("/:id/edit", middleware.checkSurveyOwnership, function(req, res) {
 
 // UPDATE - Survey Update Route
 router.put("/:id", middleware.checkSurveyOwnership, function(req, res) {
-    // find and update survey
     
-    Survey.findByIdAndUpdate(req.params.id, req.body.survey, function(err, updatedSurvey){
+    var name = req.body.name
+    var description = req.body.description
+    var startdate = req.body.startdate
+    var enddate = req.body.enddate
+    var author = {
+        id: req.user._id,
+        username: req.user.username,
+        firstName: req.user.firstName
+    }
+    
+    var topic = req.body.topic
+    
+    // Check to ensure if the survey added to featured surveys
+    let featuredSurveys;
+    if (req.body.featuredSurveys) {
+        featuredSurveys = true
+    } else {
+        featuredSurveys = false
+    }
+    
+    // Check to ensure if the survey added as a public survey
+    let publicSurvey;
+    if (req.body.publicSurvey) {
+        publicSurvey = true
+    } else {
+        publicSurvey = false
+    }
+    
+    // Check to ensure if the respondents should see UI elements or not
+    let hideRespondentsNav;
+    if (req.body.hideRespondentsNav) {
+        hideRespondentsNav = true
+    } else {
+        hideRespondentsNav = false
+    }
+    
+    var editedSurvey = {name: name, description: description, startdate, enddate, author: author, topic: topic, featuredSurveys: featuredSurveys, publicSurvey: publicSurvey, hideRespondentsNav: hideRespondentsNav}
+    
+    console.log("before:")
+    console.log(editedSurvey)
+    
+    
+    // find and update survey
+    Survey.findByIdAndUpdate(req.params.id, editedSurvey, function(err, updatedSurvey){
         if(err) {
             
             res.redirect("/surveys");
