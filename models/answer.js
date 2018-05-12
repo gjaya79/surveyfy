@@ -1,16 +1,31 @@
+/*
+Author: Avinash Reddy
+Edited:Yuxuan He
+Date: 07/05/2018
+*/
+
+
 var mongoose = require("mongoose")
 
-
-// Getting ObjectId data
-
 var respondentsSchema = mongoose.Schema({
-    user: mongoose.Schema.Types.ObjectId,
-    lastName: String,
-    questionnaire: {
-        type: respondentsSchema.Types.ObjectId,
-        ref: 'Questionnaire'
+    survey:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Survey'
     },
-    content: String, 
+    
+    answers:[{
+        qid: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Question'
+         },
+        types:{
+            type:Number,
+            default:1
+        },
+        content: {
+            type: String
+        }
+    }]
     
 })
 

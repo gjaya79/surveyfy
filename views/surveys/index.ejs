@@ -88,9 +88,7 @@
               <div class="btn-toolbar" role="toolbar">
                   <% if(currentUser && survey.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
               <div class="btn-group mr-2" role="group">
-                  
-                      <a href="/surveys/<%= survey._id %>" class="btn btn-outline-secondary">View Survey</a>
-                  
+                  <a href="/surveys/<%= survey._id %>" class="btn btn-outline-secondary">View Survey</a>
               </div>
               <div class="btn-group mr-2" role="group">
                   <form id="delete-inline" action="/surveys/<%= survey._id %>?_method=DELETE" method="post">

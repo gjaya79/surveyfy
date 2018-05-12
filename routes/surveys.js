@@ -1,6 +1,7 @@
 var express = require("express")
 var router  = express.Router()
 var Survey  = require("../models/survey")
+var Answer = require("../models/answer")
 var middleware = require("../middleware/index") // "../middleware" is fine coz of index.js has a special value for node 
 
 // Display - Route for Surveys
@@ -123,17 +124,18 @@ router.get("/:id", middleware.isLoggedIn, function(req, res) {
     
 })
 
-// Respondent Survey Display - Route for displaying an individual Survey
-router.get("/response/:id", function(req, res) {
-    
+// Survey Form - Route for details of individual survey & line chart
+// Edited:Karthik Parsad
+// Date:09/05/2018
+router.get("/report/:id", middleware.isLoggedIn, function(req, res) {
     Survey.findById(req.params.id).populate("questions").exec( function(error, foundSurvey) {
         if (error) {
             console.log(error)
         } else {
-            res.render("respondents/respondent_answer", {survey: foundSurvey})
+            res.render("surveys/more_details", {survey: foundSurvey, routeParam: req.params})
         }
     })
-})
+});
 
 // EDIT - Survey Edit Route
 router.get("/:id/edit", middleware.checkSurveyOwnership, function(req, res) {
@@ -210,6 +212,56 @@ router.delete("/:id", middleware.checkSurveyOwnership, function(req, res) {
         }
     })
 })
+
+// Respondent Survey Display - Route for displaying an individual Survey
+router.get("/response/:id", function(req, res) {
+
+    Survey.findById(req.params.id).populate("questions").exec( function(error, foundSurvey) {
+        if (error) {
+            console.log(error)
+        } else {
+            res.render("respondents/respondent_answer", {survey: foundSurvey})
+        }
+    })
+})
+
+
+/*
+    Respondent Survey - ADD answers to answer model
+    Edited by Yuxuan He at 05/04/2018
+*/
+router.post("/response/:id", function(req, res) {
+    /*Create new Answer */
+    
+    //  console.log("q_id"+ req.params.question._id)
+    console.log("DEBUG: displaying req data")
+    console.log(req.body.answer)
+    Answer.create(req.body.answer,function(err,answer){
+        if (err) {
+            req.flash("error", "The Answer is not Successful.")
+            console.log(err)
+        } else {
+            answer.save()
+            req.flash("success", "Successfully answered.")
+            res.redirect("/")
+        }
+    })
+})
+
+/*
+    Respondent Survey - DELETE answers to answer model
+    Edited by Yuxuan He at 05/04/2018
+*/
+// router.delete("/response/:id", middleware.checkQuestionOwnership, function(req, res) {
+//     // Find ID and Delete the question_id
+//     Answer.findByIdAndRemove(req.params.question_id, function(err){
+//         if (err) {
+//             res.redirect("back")
+//         } else {
+//             req.flash("success", "This Answer Successfully Deleted")
+//         }
+//     })
+// })
 
 function escapeRegex(text) {
     // Matches any number of characters globally

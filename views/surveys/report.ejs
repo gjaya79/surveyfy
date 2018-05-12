@@ -24,11 +24,11 @@
                             <h4><%= survey.description %></h4>
                             <table>
                             <tr>
-                                <th>Viewed</th>
-                                <td></td>
+                                <th>Total questions</th>
+                                <td><%=survey.questions.length%></td>
                             </tr>
                             <tr>
-                                <th>Most Viewed</th>
+                                <th>Viewed</th>
                                 <td></td>
                             </tr>
                             <tr>
@@ -37,7 +37,7 @@
                             </tr>
                             </table>
                             <p>
-                                <a class="btn btn-outline-secondary">More Detail</a>
+                                <a class="btn btn-outline-secondary" href="/surveys/report/<%=survey._id%>">More Detail</a>
                             </p>
                         </div>
                     </div>

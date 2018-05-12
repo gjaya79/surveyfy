@@ -1,113 +1,140 @@
-<% include ../partials/header %>
+<% if(survey.hideRespondentsNav){ %>
+   <% include ../partials/res-header %>
+   <br></br>
+ <% } else{ %>  
+   <% include ../partials/header %>
+<% } %>
+
 
 <div>
-<a class="btn btn-primary float-left prevnext" href="#">Previous</a>
-<a class="btn btn-primary float-right prevnext" href="#">Next</a>
+<button class="btn btn-primary float-left prevnext" onclick="previousQuestion()">Previous</button>
+<button class="btn btn-primary float-right prevnext" onclick="nextQuestion()">Next</button>
 
 </div>
 
 <br></br>
 
-<div class="container">
+<div id="surveyTitle">
     <div class="card card-body mb-2">
         <h1><%= survey.name %></h1>
         <p><%= survey.description %></p>
         <p><em>Created by - <%= survey.author.firstName %></em></p>
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
+    <form action="/surveys/response/<%= survey._id %>" method="post">
+        <input type="text" name="answer[survey]" value="<%=survey._id%>" style="display: none;">
     </div>
-    
-    <br></br>
-        <div class="card card-body mb-2 bg-light">
-            
-            
+</div>    
+
+<br></br>
+<hr></hr>
+<br></br>
+
+<% survey.questions.forEach(function(question,i) { %>
+<div id="question<%=i%>" class="card card-body mb-2 bg-light" style="display: none;">
+        <img class="col-md-2 col-sm-2 col-xs-2 img-fluid img-thumbnail" src="<%= question.image %>">
+        <p>
+            <strong> Question <%-c=i+1%> </strong>
+        </p>    
+        
+            <%= question.text %>  
+                
+            <input type="number" name="answer[answers][<%=i%>][types]" value="<%-question.types%>" style="display: none;">
+            <input type="text" name="answer[answers][<%=i%>][qid]" value="<%-question._id%>" style="display: none;">    
             <br></br>
-            <hr></hr>
-            <% survey.questions.forEach(function(question) { %>
-                <div>
-                <img class="col-md-2 col-sm-2 col-xs-2 img-fluid img-thumbnail" src="<%= question.image %>">
+            
+            <!--display options:-->
+            <!--display question preview based on types, with if statement-->
+            <% if (question.types == 1) { %>
+                <% question.options.forEach(function(options) { %>
                     <p>
-                        
-                              
-                        <strong>
-                        <%= question.text %>
-                        </strong>
-                    
-                        
-                    </p>    
-                    
-                    <!--display options:-->
-                    
-                    <!--display question preview based on types, with if statement-->
-                    <% if (question.types == 1) { %>
-                        <div>
-                            <% question.options.forEach(function(options) { %>
-                                <p>
-                                  <input type="radio" id="radioTest" name="radios">
-                                  <label><%= options.content %></label>
-                                </p>
-                            <% }) %>
-                        </div>
-                    <% } else if (question.types == 2) { %>
-                        <div>
-                        <% question.options.forEach(function(options) { %>
-                            <p>
-                              <input type="checkbox" id="checboxTest" name="checboxes">
-                              <label><%= options.content %></label>
-                            </p>
-                        <% }) %>
-                        </div>
-                    <% } else if(question.types == 3){ %>
-                        <div>
-                            <input type="text" value="" >
-                            </textarea>
-                        </div>
-                    <% } else if(question.types == 4){ %>
-                        <div>
-                            <textarea rows="4" cols="50"></textarea>
-                            </textarea>
-                        </div>
-                     <% } else if (question.types == 5) { %>
-                        <div>
-                        <% question.options.forEach(function(options) { %>
-                            <p>
-                              <input type="text" value="" >
-                            </p>
-                         <% }) %>
-                        </div>
-                    <% } else if (question.types == 6) { %>
-                       <div>
-                       <% question.options.forEach(function(options) { %>
-                            <span><input type="radio" name="rating" id="str"><label for="str"><%= options.content %></label></span>
-                       <% }) %>
-                       </div> 
-                    <% } else if (question.types == 7) { %>
-                        <input type="range" min="<%= question.silderMax%>" max="<%= question.silderMin%>">
-                        <span>Max: <%= question.silderMax%></span>
-                        <span>Min: <%= question.silderMin%></span>
-                    <% } %>
-                        
-                     
-                    
-                    <br></br>
-            <% }) %>
-        </div>
+                      <input type="radio" id="radioTest<%- question.options.indexOf(options)%>" name="answer[answers][<%-i%>][content]" value="<%= options.content %>">
+                      <label for="radioTest<%- question.options.indexOf(options)%>"><%= options.content %></label>
+                    </p>
+                <% }) %>
+            <% } else if (question.types == 2) { %>
+                <% question.options.forEach(function(options) { %>
+                    <p>
+                      <input type="checkbox" id="checboxTest<%- question.options.indexOf(options)%>" name="answer[answers][<%-i%>][content]"  value="<%= options.content %>">
+                      <label for="checboxTest<%- question.options.indexOf(options)%>"><%= options.content %></label>
+                    </p>
+                <% }) %>
+            <% } else if(question.types == 3){ %>
+                <input type="text" value="" name="answer[answers][<%-i%>][content]" >
+                </textarea>
+            <% } else if(question.types == 4){ %>
+                <textarea rows="4" cols="50"  name="answer[answers][<%-i%>][content]"></textarea>
+                </textarea>
+             <% } else if (question.types == 5) { %>
+                <% question.options.forEach(function(options) { %>
+                    <p>
+                      <input type="text" value="" name="answer[answers][<%-i%>][content]" >
+                    </p>
+                 <% }) %>
+            <% } else if (question.types == 6) { %>
+               <% question.options.forEach(function(options) { %>
+                    <span><input type="radio" name="rating" id="rating<%- question.options.indexOf(options)%>" name="answer[answers][<%-i%>][content]" value="<%= options.content %>"><label for="rating<%- question.options.indexOf(options)%>"><%= options.content %></label></span>
+               <% }) %>
+            <% } else if (question.types == 7) { %>
+                <input type="range" min="<%= question.silderMax%>" max="<%= question.silderMin%>" name="answer[answers][<%-i%>][content]">
+                <span>Max: <%= question.silderMax%></span>
+                <span>Min: <%= question.silderMin%></span>
+            <% } %>
+            <br></br>
+    </div>
+    <% }) %>
+    
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" aria-valuenow="getPrecentage()"
+      aria-valuemin="0" aria-valuemax="100">
+        <script>
+        document.write(getPrecentage());
+        </script>
+        %
+      </div>
     </div>
     
-</div>
+    <div class="container">
+        <button type="submit" class="btn btn-primary float-right">Submit</button>
+    </div>
+</form>
 
-<div class="container">
-    <a class="btn btn-primary float-right" href="/">Submit</a>
-</div>
+<script>
+    var JCounter = 0;
+    var totalQuestions = <%= survey.questions.length %>
+    document.getElementById("question"+JCounter).style.display="block";
+    
+    function nextQuestion() {
+       var previousCounter=JCounter;
+       JCounter++;
+       
+    //   for(i=0;i<totalQuestions;i++){
+    //       document.getElementById("question"+i).style.display="none";
+    //   }
+       document.getElementById("question"+previousCounter).style.display="none";
+       document.getElementById("question"+JCounter).style.display="block";
+    }
+    
+    function previousQuestion() {
+       var previousCounter=JCounter;
+       JCounter--;
+       
+    //   for(i=0;i<totalQuestions;i++){
+    //       document.getElementById("question"+i).style.display="none";
+    //   }
+       document.getElementById("question"+previousCounter).style.display="none";
+       document.getElementById("question"+JCounter).style.display="block";
+    }
+    
+    function getPrecentage(){
+        var percent = (JCounter/totalQuestions)*100;
+        return percent;
+    }
+    
+</script>
 
+<% if(survey.hideRespondentsNav){ %>
+       <% include ../partials/res-footer %>
+ <% } else{ %>  
+   <% include ../partials/footer %>
+<% } %>
 
-
-<% include ../partials/footer %>

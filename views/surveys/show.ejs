@@ -59,8 +59,8 @@
                         <div>
                             <% question.options.forEach(function(options) { %>
                                 <p>
-                                  <input type="radio" id="radioTest" name="radios">
-                                  <label><%= options.content %></label>
+                                  <input type="radio" id="radioTest<%- question.options.indexOf(options)%>" value="<%= options.content %>" name="radio-group">
+                                  <label for="radioTest<%- question.options.indexOf(options)%>"><%= options.content %></label>
                                 </p>
                             <% }) %>
                         </div>
@@ -68,8 +68,8 @@
                         <div>
                         <% question.options.forEach(function(options) { %>
                             <p>
-                              <input type="checkbox" id="checboxTest" name="checboxes">
-                              <label><%= options.content %></label>
+                              <input type="checkbox" id="checboxTest<%- question.options.indexOf(options)%>" value="<%= options.content %>" name="checboxes">
+                              <label for="checboxTest<%- question.options.indexOf(options)%>"><%= options.content %></label>
                             </p>
                         <% }) %>
                         </div>
@@ -94,7 +94,7 @@
                     <% } else if (question.types == 6) { %>
                        <div>
                        <% question.options.forEach(function(options) { %>
-                            <span><input type="radio" name="rating" id="str"><label for="str"><%= options.content %></label></span>
+                            <span><input type="radio" name="rating" id="rating<%- question.options.indexOf(options)%>"><label for="rating<%- question.options.indexOf(options)%>"><%= options.content %></label></span>
                        <% }) %>
                        </div> 
                     <% } else if (question.types == 7) { %>
