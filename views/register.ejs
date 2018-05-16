@@ -1,4 +1,5 @@
 <% include partials/header %>
+<!--Sign Up functionality form-->
 <div class="row">
   <div class="col-md-6 mx-auto">
     <div class="card card-body">
@@ -20,12 +21,12 @@
           <label for="username">Email</label>
           <input type="email" class="form-control" name="username" required>
         </div>
-        
+        <!--An Additional Functionality added to check the pattern matching for password-->
         <div class="form-group">
           <label for="password">Password</label>
           <input type="password" class="form-control" name="password" pattern=".{8,16}" title="8 to 16 characters" required>
         </div>
-        
+        <!--An Additional Functionality added to check the pattern matching for Admin Code-->
         <div class="form-group">
           <label for="adminCode">Admin Code</label>
           <input type="password" class="form-control" name="adminCode" pattern=".{10,20}" title="Please Provide Exact Admin Code">

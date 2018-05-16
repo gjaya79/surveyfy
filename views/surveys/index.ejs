@@ -63,16 +63,17 @@
     });
     </script>
     
+    <br></br>
     
     <div class="row text-left" style="display:flex; flex-wrap: wrap;">
         
     
-        
+        <h1>Surveys</h1>
     <table id="SurveyList">
       <tr>
         <th>Name</th>
         <th>Created At</th>
-        <th>End Date Extension</th>
+        <th>Survey End Date</th>
         <th>Author</th>
         <!--<th>Link</th>-->
         <th></th>
@@ -80,7 +81,7 @@
        <% surveys.forEach(function(survey) { %>
        <tr>
            <td><%= survey.name %></td>
-           <td><%= survey.createdAt %></td>
+           <td><%= moment(survey.createdAt).format('MMMM Do YYYY')%></td>
            <td><%= survey.enddate %></td>
            <td><%= survey.author.firstName %></td>
            <!--<td>undefined</td>-->

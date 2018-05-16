@@ -2,24 +2,29 @@
 
 
 <div class="container">
-     <header class="jumbotron">
-         <div class="container">
-             <h1 class="text-capitalize">Welcome to Surveyfy</h1>
-             <h3>View Our Surveys</h3>
-         </div>
-     </header>
+    <header class="jumbotron">
+        <div class="container">
+            <h1 class="text-capitalize">Welcome to Surveyfy</h1>
+            <h3>View Our Surveys</h3>
+        </div>
+    </header>
     
+    <!--Checks if user is logged in to access and view the surveys-->
     <% if(currentUser) {%>
     
     <a class="float-right btn btn-primary" href="/surveys">View All Surveys</a>
     
     <% } %>
     
+    
+    
     <br></br>
     <br></br>
-    <h1 class="text-center">FEATURED SURVEYS</h1>
+    
+    <!--To display featured surveys-->
+     <h1 class="text-center">FEATURED SURVEYS</h1>
     <br></br>
-    <div class="row text-left" style="display:flex; flex-wrap: wrap;">
+    <div class="container">
         <% if(surveys.length > 0){ %>
            <% surveys.forEach(function(survey) { %>
                 <div class="card card-body bg-light">
@@ -29,7 +34,7 @@
                             <h4><%= survey.description %></h4>
                             
                             <p>
-                                <a href="/surveys/<%= survey._id %>" class="btn btn-outline-secondary">More</a>
+                                <a href="/surveys/response/<%= survey._id %>" class="btn btn-outline-secondary">Take the Survey</a>
                             </p>
                             
                             <br></br>
@@ -37,7 +42,7 @@
                     </div>
                 </div>
             <%})%>
-            
+        <!--No display featured surveys. Then it will display the below outcome-->
          <% } else{ %>  
              <div class="container">
                  <h3 class="text-center">No Featured Surveys Now...</h1>

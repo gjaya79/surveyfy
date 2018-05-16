@@ -5,6 +5,7 @@ var questionSchema = mongoose.Schema({
     createdAt: {type: Date, default: Date.now},
     instruction: String,
     image: String,
+    groupQuestion: String,
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,

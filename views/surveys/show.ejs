@@ -39,12 +39,12 @@
             
             <br></br>
             <hr></hr>
-            <% survey.questions.forEach(function(question) { %>
+            <% survey.questions.forEach(function(question, i) { %>
                 <div>
-                <img class="col-md-2 col-sm-2 col-xs-2 img-fluid img-thumbnail" src="<%= question.image %>">
+                <!--<img class="col-md-2 col-sm-2 col-xs-2 img-fluid img-thumbnail" src="<%= question.image %>">-->
                     <p>
                         
-                              
+                        <p>Question: <%= i + 1 %></p>      
                         <strong>
                         <%= question.text %>
                         </strong>
@@ -113,6 +113,7 @@
                             </form>
                         <% } %>
                     </div>
+                    <br></br>
                     <br></br>
             <% }) %>
         </div>

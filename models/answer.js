@@ -12,7 +12,13 @@ var respondentsSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Survey'
     },
-    
+    createdAt: {type: Date, default: Date.now},
+    exceptTime:{
+        type:String
+    },
+    totalAnswerTime:{
+        type:String
+    },
     answers:[{
         qid: {
             type: mongoose.Schema.Types.ObjectId,
@@ -24,6 +30,9 @@ var respondentsSchema = mongoose.Schema({
         },
         content: {
             type: String
+        },
+        responseTime:{
+            type:String
         }
     }]
     

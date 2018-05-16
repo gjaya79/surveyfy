@@ -73,6 +73,8 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
         hideRespondentsNav = false
     }
     
+    
+    
     var newSurvey = {name: name, description: description, startdate, enddate, author: author, topic: topic, featuredSurveys: featuredSurveys, publicSurvey: publicSurvey, hideRespondentsNav: hideRespondentsNav}
     
     
@@ -246,6 +248,11 @@ router.post("/response/:id", function(req, res) {
             res.redirect("/")
         }
     })
+})
+
+// Display of end page of respondent page
+router.get("/response/end",function(req, res) {
+    res.render("respondents/end_Page")
 })
 
 /*
