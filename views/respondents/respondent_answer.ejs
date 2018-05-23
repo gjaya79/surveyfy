@@ -9,44 +9,47 @@
     <div>
         <button id="previousButton" class="btn btn-secondary float-left prevnext" onclick="previousQuestion()" style="display: none;">Previous</button>
 		<button id="nextButton" class="btn btn-primary float-right prevnext" onclick="nextQuestion()">Next</button>
+		<input type="button" id="submitButton" class="btn btn-success float-right" onclick="final_submit()" value="Submit" style="display: none;"/>
     </div>
 
     <br></br>
 
     <div id="surveyTitle">
         <div id="surveyTitleCard" class="card card-body mb-2">
-            <h1><%= survey.name %></h1>
+            <!--<h1><%= survey.name %></h1>-->
             <p><%= survey.description %></p>
-            <p><em>Created by - <%= survey.author.firstName %></em></p>
+            <!--<p><em>Created by - <%= survey.author.firstName %></em></p>-->
         <form action="/surveys/response/<%= survey._id %>" id="surveySubmitForm" method="post">
             <!--input of surveyID and Total time using-->
             <input type="text" name="answer[survey]" value="<%=survey._id%>" style="display: none;">
             <input id="totalTime" type="text" name="answer[totalAnswerTime]" value="" style="display: none;">
             
         </div>
-        
     </div>    
+</div>
 
-    <br></br>
+    
     <hr></hr>
-    <br></br>
+    
+    
+<div class="container"> 
     
     <% survey.questions.forEach(function(question,i) { %>
     <div id="question<%=i%>" class="card card-body mb-2 bg-light" style="display: none;">
-            <!--<img class="col-md-2 col-sm-2 col-xs-2 img-fluid img-thumbnail" src="<%= question.image %>">-->
-            
+            <!--<img class="col-md-2 col-sm-2 col-xs-2 img-fluid img-thumbnail" src="<%= //question.image %>">-->
+                
                 <div class="progress progress-striped active" style="height: 15px;">
                 	<div class="progress-bar progress-bar-striped active" role="progressbar"
-                		 aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:<%-(((i+1)/survey.questions.length)*100)%>%">
-                         <%-i+1%> / <%-survey.questions.length%>
+                		 aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:<%=(((i+1)/survey.questions.length)*100)%>%">
+                         <p><%= Math.round((i+1)/(survey.questions.length)*100)%>%</p>
                 	</div>
                 </div>
             
             <p>
-                <strong> Question <%-c=i+1%> </strong>
+                 Question <%-c=i+1%> 
             </p>    
             
-                <%= question.text %>  
+                <strong> <%= question.text %>  </strong>
                 
                 <!--Input of question types,id,and respond time for individual question -->
                 <input type="number" name="answer[answers][<%=i%>][types]" value="<%-question.types%>" style="display: none;">
@@ -57,17 +60,17 @@
                 <!--display options:-->
                 <!--display question preview based on types, with if statement-->
                 <% if (question.types == 1) { %>
-                    <% question.options.forEach(function(options) { %>
+                    <% question.options.forEach(function(options,k) { %>
                         <p>
-                          <input type="radio" id="radioTest<%- question.options.indexOf(options)%>" name="answer[answers][<%-i%>][content]" value="<%= options.content %>">
-                          <label for="radioTest<%- question.options.indexOf(options)%>"><%= options.content %></label>
+                          <input type="radio" id="radioTest[Q<%=i%>][<%-k%>]" name="answer[answers][<%-i%>][content]" value="<%= options.content %>">
+                          <label for="radioTest[Q<%=i%>][<%-k%>]"><%= options.content %></label>
                         </p>
                     <% }) %>
                 <% } else if (question.types == 2) { %>
-                    <% question.options.forEach(function(options) { %>
+                    <% question.options.forEach(function(options,k) { %>
                         <p>
-                          <input type="checkbox" id="checboxTest<%- question.options.indexOf(options)%>" name="answer[answers][<%-i%>][content]"  value="<%= options.content %>">
-                          <label for="checboxTest<%- question.options.indexOf(options)%>"><%= options.content %></label>
+                          <input type="checkbox" id="checboxTest[Q<%=i%>][<%-k%>]" name="answer[answers][<%-i%>][content][<%=k%>]"  value="<%= options.content %>">
+                          <label for="checboxTest[Q<%=i%>][<%-k%>]"><%= options.content %></label>
                         </p>
                     <% }) %>
                 <% } else if(question.types == 3){ %>
@@ -83,8 +86,8 @@
                         </p>
                      <% }) %>
                 <% } else if (question.types == 6) { %>
-                   <% question.options.forEach(function(options) { %>
-                        <span><input type="radio" name="rating" id="rating<%- question.options.indexOf(options)%>" name="answer[answers][<%-i%>][content]" value="<%= options.content %>"><label for="rating<%- question.options.indexOf(options)%>"><%= options.content %></label></span>
+                   <% question.options.forEach(function(options,k) { %>
+                        <span><input type="radio" name="rating" id="rating[Q<%=i%>][<%=k%>]" name="answer[answers][<%-i%>][content][<%=k%>]" value="<%= options.content %>"><label for="ratingrating[Q<%=i%>][<%=k%>]"><%= options.content %></label></span>
                    <% }) %>
                 <% } else if (question.types == 7) { %>
                     <input type="range" min="<%= question.silderMax%>" max="<%= question.silderMin%>" name="answer[answers][<%-i%>][content]">
@@ -94,7 +97,7 @@
                 <br></br>
         </div>
         <% }) %>
-        
+</div>
         
     
         <div class="container">

@@ -26,7 +26,13 @@ var questionRoutes   = require("./routes/questions"),
 // Setting and Connecting Database
 mongoose.connect("mongodb://localhost/surveyfy_db")
 
+// Setting and Connecting Database
 
+// MongoDB connection for Development Version of the app
+// mongoose.connect(process.env.DATABASEURL)
+
+// MongoDB connection for Production Version of the app
+// mongoose.connect("mongodb://survey:umasssurvey2200@ds239587.mlab.com:39587/surveyfy")
 
 // To use flash for notifications
 app.use(flash())
