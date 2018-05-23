@@ -31,6 +31,10 @@ var surveySchema = new mongoose.Schema({
     questions: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Question"
+    }],
+    survey_answer:[{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Answer"
     }]
 })
 

@@ -140,7 +140,7 @@
         
         <div class="form-group">
           <label for="image">Image</label>
-          <input type="file" id="image" class="form-control" name="image" accept="image/*">
+          <input type="file" id="image" class="form-control" name="image" accept="image/*" required>
         </div>
         
         
@@ -208,6 +208,9 @@
   var ratingScalePreview = document.getElementById("Preview_RatingScale");
   var sliderPreview = document.getElementById("Preview_Silder");
   
+  
+  document.getElementById("btnSingle").disabled = true;
+  
   function addCounter(){
     optionCounter++;
   }
@@ -217,7 +220,6 @@
   }
   
    function displayRadiobox(){
-    radiobox.style.display = "block";
     
     //control of other boxes and buttons
     radioboxPreview.style.display = "block";
@@ -229,10 +231,17 @@
     sliderPreview.style.display = "none";
     
     document.getElementById("typeInput").value = 1;
+    
+    document.getElementById("btnSingle").disabled = true;
+    document.getElementById("btnMult").disabled = false;
+    document.getElementById("btnTxtBox").disabled = false;
+    document.getElementById("btnMultTxt").disabled = false;
+    document.getElementById("btnTxtList").disabled = false;
+    document.getElementById("btnRateScale").disabled = false;
+    document.getElementById("btnRateSilder").disabled = false;
   }
 
   function displayCheckbox(){
-    radiobox.style.display = "block";
     radioboxPreview.style.display = "none";
     checkboxPreview.style.display = "block";
     singleLinePreview.style.display = "none";
@@ -242,10 +251,17 @@
     sliderPreview.style.display = "none";
     
     document.getElementById("typeInput").value = 2;
+    
+    document.getElementById("btnSingle").disabled = false;
+    document.getElementById("btnMult").disabled = true;
+    document.getElementById("btnTxtBox").disabled = false;
+    document.getElementById("btnMultTxt").disabled = false;
+    document.getElementById("btnTxtList").disabled = false;
+    document.getElementById("btnRateScale").disabled = false;
+    document.getElementById("btnRateSilder").disabled = false;
   }
   
    function displayTextbox(){
-    radiobox.style.display = "none";
     
     radioboxPreview.style.display = "none";
     checkboxPreview.style.display = "none";
@@ -256,10 +272,17 @@
     sliderPreview.style.display = "none";
     
     document.getElementById("typeInput").value = 3;
+    
+    document.getElementById("btnSingle").disabled = false;
+    document.getElementById("btnMult").disabled = false;
+    document.getElementById("btnTxtBox").disabled = true;
+    document.getElementById("btnMultTxt").disabled = false;
+    document.getElementById("btnTxtList").disabled = false;
+    document.getElementById("btnRateScale").disabled = false;
+    document.getElementById("btnRateSilder").disabled = false;
    }
    
    function displayMultLineTextbox(){
-     radiobox.style.display = "none"; 
      
     radioboxPreview.style.display = "none";
     checkboxPreview.style.display = "none";
@@ -270,11 +293,17 @@
     sliderPreview.style.display = "none";
     
     document.getElementById("typeInput").value = 4;
+    
+    document.getElementById("btnSingle").disabled = false;
+    document.getElementById("btnMult").disabled = false;
+    document.getElementById("btnTxtBox").disabled = false;
+    document.getElementById("btnMultTxt").disabled = true;
+    document.getElementById("btnTxtList").disabled = false;
+    document.getElementById("btnRateScale").disabled = false;
+    document.getElementById("btnRateSilder").disabled = false;
    }
    
    function displayLineListTextbox(){
-    radiobox.style.display = "block"; 
-     
     radioboxPreview.style.display = "none";
     checkboxPreview.style.display = "none";
     singleLinePreview.style.display = "none";
@@ -284,11 +313,17 @@
     sliderPreview.style.display = "none";
     
     document.getElementById("typeInput").value = 5;
+    
+    document.getElementById("btnSingle").disabled = false;
+    document.getElementById("btnMult").disabled = false;
+    document.getElementById("btnTxtBox").disabled = false;
+    document.getElementById("btnMultTxt").disabled = false;
+    document.getElementById("btnTxtList").disabled = true;
+    document.getElementById("btnRateScale").disabled = false;
+    document.getElementById("btnRateSilder").disabled = false;
    }
    
    function displayRatingScale(){
-    radiobox.style.display = "block"; 
-     
     radioboxPreview.style.display = "none";
     checkboxPreview.style.display = "none";
     singleLinePreview.style.display = "none";
@@ -298,11 +333,17 @@
     sliderPreview.style.display = "none";
     
     document.getElementById("typeInput").value = 6;
+    
+    document.getElementById("btnSingle").disabled = false;
+    document.getElementById("btnMult").disabled = false;
+    document.getElementById("btnTxtBox").disabled = false;
+    document.getElementById("btnMultTxt").disabled = false;
+    document.getElementById("btnTxtList").disabled = false;
+    document.getElementById("btnRateScale").disabled = true;
+    document.getElementById("btnRateSilder").disabled = false;
    }
    
    function displaySilder(){
-    radiobox.style.display = "none"; 
-     
     radioboxPreview.style.display = "none";
     checkboxPreview.style.display = "none";
     singleLinePreview.style.display = "none";
@@ -312,6 +353,14 @@
     sliderPreview.style.display = "block";
     
     document.getElementById("typeInput").value = 7;
+    
+    document.getElementById("btnSingle").disabled = false;
+    document.getElementById("btnMult").disabled = false;
+    document.getElementById("btnTxtBox").disabled = false;
+    document.getElementById("btnMultTxt").disabled = false;
+    document.getElementById("btnTxtList").disabled = false;
+    document.getElementById("btnRateScale").disabled = false;
+    document.getElementById("btnRateSilder").disabled = true;
    }
    
   function addNewInputRadioText(){

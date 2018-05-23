@@ -1,6 +1,9 @@
 <% include ../partials/header %>
 
-    <h1>Survey Report</h1>
+<div class="container">
+ <h1>Survey Report</h1>
+</div>
+    
 
     <div class="row text-left" style="display:flex; flex-wrap: wrap;">
     <style>
@@ -17,8 +20,8 @@
     </style>
         <% if(surveys.length > 0){ %>
            <% surveys.forEach(function(survey) { %>
-                <div class="card card-body bg-light">
-                    <div class="thumbnail">
+                <div class="container">
+                    <div class="card card-body bg-light">
                         <div class="caption">
                             <h3><%= survey.name %></h3>
                             <h4><%= survey.description %></h4>
@@ -28,11 +31,11 @@
                                 <td><%=survey.questions.length%></td>
                             </tr>
                             <tr>
-                                <th>Viewed</th>
-                                <td></td>
+                                <th>Total Answered</th>
+                                <td><%=survey.survey_answer.length%></td>
                             </tr>
                             <tr>
-                                <th>Last Modfied</th>
+                                <th>Created At</th>
                                 <td><%= survey.createdAt %></td>
                             </tr>
                             </table>
@@ -54,6 +57,7 @@
     </div>
 </div>
 
+<div class="container">
  <a class="btn btn-secondary float-left" href="/surveys">Go Back</a>
- 
+</div>
 <% include ../partials/footer %>

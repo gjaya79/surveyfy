@@ -22,16 +22,33 @@
     <br></br>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js" type="text/javascript"></script>
-    <canvas id="myChart" width="4" height="1"></canvas>
+    
+    <div class="container">
+        <canvas id="myChart" width="400" height="160"></canvas>
+    </div>
+    
     <script>
     var ctx = document.getElementById("myChart").getContext('2d');
+    
+    //Array of survey data
+    var suvreyData = [];
+     <% surveys.forEach(function(survey) { %>
+         suvreyData.push(<%=survey.questions.length%>)
+     <% }) %>
+    
+    var surveyLabels = [];
+    <% surveys.forEach(function(survey) { %>
+         surveyLabels.push("<%=survey.name%>");
+    <% }) %>
+    
+    //chart variable to display
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ["Survey 1", "Survey 2", "Survey 3", "Survey 4", "Survey 5", "Survey 6"],
+            labels: surveyLabels,
             datasets: [{
-                label: '',
-                data: [12, 19, 3, 5, 2, 3],
+                label: 'Questions',
+                data: suvreyData,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -104,30 +121,6 @@
     </table>
     </div>
     
-    <!--<div class="row text-left" style="display:flex; flex-wrap: wrap;">-->
-    <!--    <% if(surveys.length > 0){ %>-->
-    <!--       <% surveys.forEach(function(survey) { %>-->
-    <!--            <div class="card card-body bg-light">-->
-    <!--                <div class="thumbnail">-->
-    <!--                    <div class="caption">-->
-    <!--                        <h3><%= survey.name %></h3>-->
-    <!--                        <h4><%= survey.description %></h4>-->
-    <!--                        <p>-->
-    <!--                            <a href="/surveys/<%= survey._id %>" class="btn btn-outline-secondary">More</a>-->
-    <!--                        </p>-->
-    <!--                    </div>-->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--        <%})%>-->
-            
-    <!--     <% } else{ %> -->
-    <!--         <div class="container">-->
-    <!--             <h3 class="text-center">No Surveys Now...</h1>-->
-    <!--         </div>-->
-           
-    <!--    <% } %>-->
-        
-    <!--</div>-->
 </div>
 
 <% include ../partials/footer %>

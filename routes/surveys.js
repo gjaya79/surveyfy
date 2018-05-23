@@ -230,22 +230,32 @@ router.get("/response/:id", function(req, res) {
 
 /*
     Respondent Survey - ADD answers to answer model
-    Edited by Yuxuan He at 05/04/2018
+    Edited by Yuxuan He at 05/22/2018
 */
 router.post("/response/:id", function(req, res) {
     /*Create new Answer */
-    
-    //  console.log("q_id"+ req.params.question._id)
-    console.log("DEBUG: displaying req data")
-    console.log(req.body.answer)
-    Answer.create(req.body.answer,function(err,answer){
-        if (err) {
-            req.flash("error", "The Answer is not Successful.")
+    Survey.findById(req.params.id, function(err, survey) {
+    if (err) {
             console.log(err)
-        } else {
-            answer.save()
-            req.flash("success", "Successfully answered.")
             res.redirect("/")
+        } else {
+            console.log("DEBUG: displaying req data")
+            console.log(req.body.answer)
+            Answer.create(req.body.answer,function(err,answer){
+                if (err) {
+                    req.flash("error", "The Answer is not Successful.")
+                    console.log(err)
+                } else {
+                    //save answers into answer table
+                    answer.save()
+                    
+                    //save answers to survey table
+                    survey.survey_answer.push(answer)
+                    survey.save()
+                    req.flash("success", "Successfully answered.")
+                    res.redirect("/")
+                }
+            })
         }
     })
 })

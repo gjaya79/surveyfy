@@ -5,11 +5,41 @@
    <% include ../partials/res-full-header %>
 <% } %>
 
+<div id="welcomePage">
+    <div class="container">
+     <div class="card card-body mb-2 bg-light">
+        <input id="exceptTime" type="number" name="answer[exceptTime]" value="5" style="display: none;">
+         <h1>Welcome!</h1>
+         <p>Welcome to our survey. This survey need few minutes. 
+         Before you take this survey, how many minutes you 
+         willing to allocate for this survey?</p>
+          <div class="container">
+              <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-secondary" onclick="exceptTimeSelect(5)">5</button>
+              </div>
+              <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-secondary" onclick="exceptTimeSelect(10)">10</button>
+              </div>
+              <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-secondary" onclick="exceptTimeSelect(15)">15</button>
+              </div>
+              <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-secondary" onclick="exceptTimeSelect(20)">20</button>
+              </div>
+              <input type="number" id="customExceptTime" value="">
+          </div>
+          <button id="startButton" class="btn btn-primary btn-sm" onclick="beginAnswer()">Start</button>
+     </div>
+     </div>
+     
+</div>
+
+<div id="answerPage" style="display: none;">
 <div class="container">
     <div>
         <button id="previousButton" class="btn btn-secondary float-left prevnext" onclick="previousQuestion()" style="display: none;">Previous</button>
 		<button id="nextButton" class="btn btn-primary float-right prevnext" onclick="nextQuestion()">Next</button>
-		<input type="button" id="submitButton" class="btn btn-success float-right" onclick="final_submit()" value="Submit" style="display: none;"/>
+		<input type="button" id="submitButton" class="btn btn-success float-right" onclick="final_submit()" value="Finish" style="display: none;"/>
     </div>
 
     <br></br>
@@ -115,6 +145,22 @@
         
         var respondBeginTime = performance.now();
         document.getElementById("question"+JCounter).style.display="block";
+        
+        function beginAnswer(){
+          var customExceptMin = document.getElementById("customExceptTime").value;
+          if(customExceptMin!=0){
+              document.getElementById("exceptTime").value = customExceptMin;
+          }else if(customExceptMin < 0 || customExceptMin == 0 ){
+               document.getElementById("exceptTime").value = 5;
+          }
+          
+          document.getElementById("welcomePage").style.display="none";
+          document.getElementById("answerPage").style.display="block";  
+        }
+        
+        function exceptTimeSelect(expc){
+            document.getElementById("exceptTime").value = expc;
+        }
     
         function nextQuestion() {
            var previousCounter=JCounter;
