@@ -5,6 +5,7 @@
    <% include ../partials/res-full-header %>
 <% } %>
 
+<!--This is the welcome page before respondents take-->
 <div id="welcomePage">
     <div class="container">
      <div class="card card-body mb-2 bg-light">
@@ -13,6 +14,7 @@
          <p>Welcome to our survey. This survey need few minutes. 
          Before you take this survey, how many minutes you 
          willing to allocate for this survey?</p>
+         <!--Let respondents to select their except time and collect them.-->
           <div class="container">
               <div class="btn-group" role="group">
                   <button type="button" class="btn btn-secondary" onclick="exceptTimeSelect(5)">5</button>
@@ -34,8 +36,10 @@
      
 </div>
 
+<!--This is answer page after the welcome page -->
 <div id="answerPage" style="display: none;">
 <div class="container">
+    <!--buttons of next and previous-->
     <div>
         <button id="previousButton" class="btn btn-secondary float-left prevnext" onclick="previousQuestion()" style="display: none;">Previous</button>
 		<button id="nextButton" class="btn btn-primary float-right prevnext" onclick="nextQuestion()">Next</button>
@@ -43,7 +47,7 @@
     </div>
 
     <br></br>
-
+    <!--Survey information display-->
     <div id="surveyTitle">
         <div id="surveyTitleCard" class="card card-body mb-2">
             <!--<h1><%= survey.name %></h1>-->
@@ -61,7 +65,7 @@
     
     <hr></hr>
     
-    
+<!--List all question and hide them for this div block-->
 <div class="container"> 
     
     <% survey.questions.forEach(function(question,i) { %>
@@ -137,15 +141,20 @@
         </div>
     </form>
     
+    
     <script>
+        //variables of Varibale, 
+        //it includes cursor of question, tottal question number, start time and end time
         var JCounter = 0;
         var totalQuestions = <%= survey.questions.length %>
         var startTime = performance.now();
         var totalTime = 0;
         
+        //current time variable.
         var respondBeginTime = performance.now();
         document.getElementById("question"+JCounter).style.display="block";
         
+        //function that begin answer after write document.
         function beginAnswer(){
           var customExceptMin = document.getElementById("customExceptTime").value;
           if(customExceptMin!=0){
@@ -158,14 +167,16 @@
           document.getElementById("answerPage").style.display="block";  
         }
         
+        //function that change the question except time.
         function exceptTimeSelect(expc){
             document.getElementById("exceptTime").value = expc;
         }
-    
+        
+        //function for next button.
         function nextQuestion() {
            var previousCounter=JCounter;
            JCounter++;
-           
+           //Condition to judge and display and hide for previous and next button
             if(JCounter==0){
 			   document.getElementById("previousButton").style.display="none";
 			   document.getElementById("submitButton").style.display="none";
@@ -188,6 +199,8 @@
            respondBeginTime = performance.now();
            totalTime+= respondTime;
            
+           //display the current question based on Jcounter(cursor of question)
+           //Also, hide the question answered.
            document.getElementById("respondTime[Q"+(JCounter-1)+"]").value = respondTime + "s"
            document.getElementById("totalTime").value = totalTime + "s";
         }
@@ -211,6 +224,8 @@
         //   for(i=0;i<totalQuestions;i++){
         //       document.getElementById("question"+i).style.display="none";
         //   }
+            //display the current question based on Jcounter(cursor of question)
+           //Also, hide the question answered.
            document.getElementById("question"+previousCounter).style.display="none";
            document.getElementById("question"+JCounter).style.display="block";
            

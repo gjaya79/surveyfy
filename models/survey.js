@@ -1,3 +1,10 @@
+/*
+Author: Avinash Reddy
+Edited:Yuxuan He
+Date: 07/05/2018
+*/
+
+// Schema that create and store the surveys.
 var mongoose = require("mongoose")
 
 // Setting a Schema and Model

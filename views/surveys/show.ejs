@@ -1,5 +1,10 @@
 <% include ../partials/header %>
 
+<!-- 
+  Show Survey Info page.
+  This is the show survey page with survey all the survey information, deployment link with all the survey questions.
+  With additional option to Edit, Delete and Add Questions to the survey.
+-->
 <div class="container">
     <div class="card card-body mb-2">
         <h1><%= survey.name %></h1>
@@ -16,8 +21,8 @@
         
         <p>Share: https://surveyfy-avinashbe.c9users.io/surveys/response/<%= routeParam.id %></p>
         
-        <!--// currentUser is checking if some one is logged in before working on showing edit or delete-->
-        <% if(currentUser && survey.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %> <!--// setup for currentUser._id is in app.js-->
+        <!--currentUser is checking if some one is logged in before working on showing edit or delete-->
+        <% if(currentUser && survey.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %> <!--setup for currentUser._id is in app.js-->
             <p><a class="btn btn-outline-success float-right" href="/surveys/<%= survey._id %>/edit">Edit Survey</a></p>
             <div>
                 <a class=" btn btn-outline-secondary float-right" href="/surveys">Go Back</a>
@@ -54,7 +59,7 @@
                     
                     <!--display options:-->
                     
-                    <!--display question preview based on types, with if statement-->
+                    <!--display question preview based on types, with if condition check-->
                     <% if (question.types == 1) { %>
                         <div>
                             <% question.options.forEach(function(options) { %>
@@ -104,7 +109,7 @@
                     <% } %>
                         
                      
-                    <!--button group place adjustment-->
+                    <!--button group place adjustment and additional functionality for Edit and Delete options for the question.-->
                     <div class="form-group">
                         <% if(currentUser && question.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) {%>
                             <a class="btn btn-outline-success float-right" href="/surveys/<%= survey._id %>/questions/<%= question._id %>/edit">Edit Question</a>

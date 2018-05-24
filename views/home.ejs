@@ -1,6 +1,9 @@
 <% include partials/header %>
 
-
+<!-- 
+  Password reset functionality with New Password and Confirm Password.
+  After clicking Log In new password will be saved.
+-->
 <div class="container">
     <header class="jumbotron">
         <div class="container">
@@ -9,10 +12,10 @@
         </div>
     </header>
     
-    <!--Checks if user is logged in to access and view the surveys-->
+    <!--Checks if admin is logged in with credentials before he can access and view the surveys-->
     <% if(currentUser) {%>
     
-    <a class="float-right btn btn-primary" href="/surveys">View All Surveys</a>
+        <a class="float-right btn btn-primary" href="/surveys">View All Surveys</a>
     
     <% } %>
     
@@ -21,8 +24,11 @@
     <br></br>
     <br></br>
     
-    <!--To display featured surveys-->
-     <h1 class="text-center">FEATURED SURVEYS</h1>
+    <!-- 
+      Checks if Surveys are created and saved in the database
+      then to display all the featured survey list.
+    -->
+    <h1 class="text-center">FEATURED SURVEYS</h1>
     <br></br>
     <div class="container">
         <% if(surveys.length > 0){ %>
@@ -40,7 +46,7 @@
                     </div>
                 </div>
             <%})%>
-        <!--No display featured surveys. Then it will display the below outcome-->
+        <!--If featured surveys are not found in the database. Then the following outcome is displayed.-->
          <% } else{ %>  
              <div class="container">
                  <h3 class="text-center">No Featured Surveys Now...</h1>

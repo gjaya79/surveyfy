@@ -1,5 +1,9 @@
 <% include ../partials/header %>
-<!--Survey Edit Form for editing the existing survey-->
+
+<!-- 
+  Show Edit Survey page.
+  This is the edit survey creation page with all the survey information that is already filled.
+-->
 <div class="row">
   <div class="col-md-6 mx-auto">
     <div class="card card-body">
@@ -25,6 +29,9 @@
           <input id="date" name="enddate" value="<%= survey.enddate%>" type="date">
         </div>
         
+        <!-- 
+          More Options for Admin
+        -->
         <fieldset>
           <legend>More Options</legend>
           

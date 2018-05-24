@@ -1,3 +1,10 @@
+/*
+Author: Avinash Reddy
+Edited:Yuxuan He
+Date: 07/05/2018
+*/
+
+// Schema that create and store admin user data.
 var mongoose = require("mongoose")
 var passportLocalMongoose = require("passport-local-mongoose")
 

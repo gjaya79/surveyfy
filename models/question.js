@@ -1,3 +1,10 @@
+/*
+Author: Avinash Reddy
+Edited:Yuxuan He
+Date: 07/05/2018
+*/
+
+// Schema that create and store the questions from survey.
 var mongoose = require("mongoose")
 
 var questionSchema = mongoose.Schema({
