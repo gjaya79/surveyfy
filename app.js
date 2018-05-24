@@ -18,10 +18,6 @@ require('dotenv').config()
 var questionRoutes   = require("./routes/questions"),
     surveyRoutes     = require("./routes/surveys"),
     indexRoutes       = require("./routes/index")
-    
-    
-
-    
 
 // Setting and Connecting Database
 mongoose.connect("mongodb://localhost/surveyfy_db")
@@ -58,21 +54,23 @@ app.use(require("express-session")({
 
 app.locals.moment = require('moment') // Now moment is available for use in all of project's view files via the variable named moment
 
+// Security features initalization.
 app.use(passport.initialize())
 app.use(passport.session())
 passport.use(new LocalStrategy(User.authenticate())) // comes form passport-local-mongoose
 passport.serializeUser(User.serializeUser()) // comes form passport-local-mongoose
 passport.deserializeUser(User.deserializeUser()) // comes form passport-local-mongoose
 
-// currentUser to app.js
+// currentUser to app.js. Which is available to all files.
 app.use(function(req, res, next){
+   // currentUser variable data is availabe throughout the project i.e. for all files
    res.locals.currentUser = req.user;
    res.locals.error = req.flash("error") // error variable is available everywhere / global
    res.locals.success = req.flash("success") // success varialble is global
    next();
 });
 
-
+// The below code is used to reduce the link lenght for accessing routes
 app.use("/", indexRoutes)
 app.use("/surveys", surveyRoutes)
 app.use("/surveys/:id/questions", questionRoutes)

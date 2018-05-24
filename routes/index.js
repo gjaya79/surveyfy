@@ -34,22 +34,23 @@ router.get("/about", function(req, res) {
 
 // AUTHENTICATION - Routes
 
-// Registration Form
+// Register - Route for registration page display
 router.get("/register", function(req, res) {
     res.render("register")
 })
 
+// Register Post - Route for registration details to database server
 router.post("/register", function(req, res) {
     var newUser = new User({firstName: req.body.firstName, lastName: req.body.lastName, username: req.body.username})
     // eval(require("locus"))
     
+    // Checks the condition if admin code matches to the given admin code
     if (req.body.adminCode === "123TrentSurvefy100") {
         newUser.isAdmin = true
     }
     
     User.register(newUser, req.body.password, function(err, user) {
         if (err) {
-            
             req.flash("error", err.message);
             return res.redirect("/register");
         } else { // authentication of the user
@@ -78,20 +79,21 @@ router.post("/login", passport.authenticate("local", {
 }),function(req, res) {
 })
 
-// Logout - route
+// Route Logout - logout()
 router.get("/logout", function(req, res) {
     req.logout()
     req.flash("success", "Logged Out")
     res.redirect("/")
 })
 
-// Forgot Password - route
+// Route Get - Forgot Password
 router.get("/forgot_password", function(req, res) {
     res.render("forgot_password")
 })
 
-// Forgot Password Post Method - route
+// Route Post - Forgot Password Post Method
 router.post('/forgot_password', function(req, res, next) {
+    // asynchronous waterfall execution of functions
     async.waterfall([
         function(done) {
             crypto.randomBytes(20, function(err, buf) {
@@ -143,7 +145,7 @@ router.post('/forgot_password', function(req, res, next) {
     })
 })
 
-// Reset Password - Route
+// Route Get - Reset Password
 router.get("/reset/:token", function(req, res) {
     User.findOne({resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() }}, function(err, user) {
         if (!user) {
@@ -154,7 +156,9 @@ router.get("/reset/:token", function(req, res) {
     })
 })
 
+// Route Post - Reset Password
 router.post("/reset/:token", function(req, res) {
+    // asynchronous waterfall execution of functions
     async.waterfall([
     function(done) {
       User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {

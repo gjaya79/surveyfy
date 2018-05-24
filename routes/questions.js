@@ -119,6 +119,7 @@ router.delete("/:question_id", middleware.checkQuestionOwnership, function(req, 
     // Find ID and Delete the question_id
     Question.findByIdAndRemove(req.params.question_id, function(err){
         if (err) {
+            // Redirects back to the previous page
             res.redirect("back")
         } else {
             req.flash("success", "Question Successfully Deleted")

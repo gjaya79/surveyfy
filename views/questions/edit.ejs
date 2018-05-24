@@ -1,20 +1,25 @@
 <% include ../partials/header %>
 
-
-
-
+<!--
+	Edit/modify a question functionality
+	Left side container consisting of question types can be chosen to modify a question 
+	Right side container consisting of question information can be edited to modify the question
+-->	
 <div class="container">
 <div class="row">
-<div id="TypeChosing" class="col-sm-6 mx-auto">      
+<div id="TypeChosing" class="col-sm-6 mx-auto"> 
+    <!--Div block for button group of type chosing-->
     <div class="card card-body">
+      <!--Button of multple choices-->
       <div id="Multiple_Choice_Group"> 
         <h4 class="text-left">Multiple Choice</h4>
           <button id="btnSingle" type="button" onclick="displayRadiobox()" class="btn btn-primary mb1 bg-teal" name="1">Single Select</button>
           <button id="btnMult" type="button" onclick="displayCheckbox()" class="btn btn-primary mb1 bg-teal" name=="2">Multiple Select</button>
-        </div>
+      </div>
       
-        <br></br>
-        
+      <br></br>
+      
+      <!--Button group of text box types choosing-->
       <div id="Textbox_Group">
         <h4 class="text-left">Open Text Field Choice</h4>
         <button id="btnTxtBox" type="button" onclick="displayTextbox()" class="btn btn-primary mb1 bg-teal" name=="3" >Textbox</button>
@@ -23,13 +28,14 @@
       </div>
       <br></br>
       
+      <!--Button group of text box types choosing-->
       <div id="Rating_Group">
         <h4 class="text-left">Rating & Ranks</h4>
          <button id="btnRateScale" type="button" onclick="displayRatingScale()" class="btn btn-primary mb1 bg-teal">Rating Scale</button>
          <button id="btnRateSilder" type="button" onclick="displaySilder()" class="btn btn-primary mb1 bg-teal">Rating Silder</button>
       </div>
       <br></br>
-      
+      <!--Preview of single select type-->
       <body>
       <div id="Preview_Radio">
         <h5 class="text-left">Single Select</h5>
@@ -50,6 +56,7 @@
       <br></br>
       </div>
       
+      <!--Preview of multiple(checkboxes) select type-->
       <div id="Preview_Checkbox" style="display: none;">
         <h5 class="text-left">Multiple Select</h5>
         Multiple Selection questions are similar to Multiple Choice questions. However, questions can have more than one correct answer. You can create as many choices as necessary. 
@@ -69,19 +76,22 @@
          
       </div>
       
+      <!--Preview of textbox type-->
       <div id="Preview_SingleLineText" style="display: none;">
         <h5 class="text-left">Single line text</h5>
         A Text Field provided for user to enter with only single line of words.
         <input type="text" value="" >
         </textarea>
       </div>
-       
+      
+      <!--Preview of mult line textbox type-->
       <div id="Preview_MultLineTxt" style="display: none;">
         <h5 class="text-left">Multiple Line of text</h5>
         A Text Field provided for user to enter with multple lines of words.
         <textarea rows="4" cols="50"></textarea>
       </div>
       
+      <!--Preview of textbox list type-->
       <div id="Preview_LineList" style="display: none;">
         <h5 class="text-left">List of textboxs</h5>
         A list of textboxs which can let users to enter multiple lines of words.
@@ -90,6 +100,7 @@
         <input type="text" value="" >
       </div>
       
+      <!--Preview of rating scale type-->
       <div id="Preview_RatingScale" style="display: none;">
         <h5 class="text-left">Rating Scale</h5>
         Choosing one of the block provided.
@@ -102,6 +113,7 @@
         </div>
       </div>
       
+      <!--Preview of silder type-->
       <div id="Preview_Silder" style="display: none;">
         <h5 class="text-left">Silder</h5>
         Draging the button to rate one stuff.
@@ -114,7 +126,7 @@
     </div>
 
   
-
+  <!--Div block that edit question content-->
   <div class="col-md-6 mx-auto">
     <div class="card card-body">
       <h3 class="text-left text-uppercase">Edit Question</h3>
@@ -130,6 +142,7 @@
           <input type="text" class="form-control" name="question[instruction]" value="<%= question.instruction %>">
         </div>
         
+        <!--Selecting group of questions-->
         <div class="form-group">
             <label for="groupQuestion">Group Question</label>
             <select class="form-control" id="groupQuestion" name="question[groupQuestion]">
@@ -172,8 +185,10 @@
 </div>
 
 <script>
+  //counter variable of question options.
   var optionCounter = 0;
   
+  //variables of buttons and preview element in edit.ejs, using getElementById method.
   var checkbox = document.getElementById("multiple_select");
   var radiobox = document.getElementById("single_select");
   var checkboxGroup = document.getElementById("checbox_group");
@@ -187,8 +202,10 @@
   var ratingScalePreview = document.getElementById("Preview_RatingScale");
   var sliderPreview = document.getElementById("Preview_Silder");
   
+  //disable single select button since it is default.
   document.getElementById("btnSingle").disabled = true;
   
+  //add Counter of question options
   function addCounter(){
     optionCounter++;
   }
@@ -201,7 +218,8 @@
   
   
    function displayRadiobox(){
-    
+    //control of other boxes and buttons, now is disable single select button  
+    //and display preview of single select
     //control of other boxes and buttons
     radioboxPreview.style.display = "block";
     checkboxPreview.style.display = "none";
@@ -211,6 +229,7 @@
     ratingScalePreview.style.display = "none";
     sliderPreview.style.display = "none";
     
+    //mark element type input as 1, which is single select
     document.getElementById("typeInput").value = 1;
     
     document.getElementById("btnSingle").disabled = true;
@@ -223,6 +242,8 @@
   }
 
   function displayCheckbox(){
+    //control of other boxes and buttons, now is disable checkbox and display 
+    //preview of checkbox(multiple select)
     radioboxPreview.style.display = "none";
     checkboxPreview.style.display = "block";
     singleLinePreview.style.display = "none";
@@ -231,6 +252,7 @@
     ratingScalePreview.style.display = "none";
     sliderPreview.style.display = "none";
     
+    //mark element type input as 2, which is mult select(checkboxes)
     document.getElementById("typeInput").value = 2;
     
     document.getElementById("btnSingle").disabled = false;
@@ -243,7 +265,8 @@
   }
   
    function displayTextbox(){
-    
+    //control of other boxes and buttons, now is disable textbox button  
+    //and display preview of single line textbox.
     radioboxPreview.style.display = "none";
     checkboxPreview.style.display = "none";
     singleLinePreview.style.display = "block";
@@ -252,6 +275,7 @@
     ratingScalePreview.style.display = "none";
     sliderPreview.style.display = "none";
     
+    //Mark element type input as 3, which is single linetextbox
     document.getElementById("typeInput").value = 3;
     
     document.getElementById("btnSingle").disabled = false;
@@ -264,7 +288,8 @@
    }
    
    function displayMultLineTextbox(){
-     
+    //control of other boxes and buttons, now is disable mult line textbox button  
+    //and display preview of multiple line textbox
     radioboxPreview.style.display = "none";
     checkboxPreview.style.display = "none";
     singleLinePreview.style.display = "none";
@@ -273,6 +298,7 @@
     ratingScalePreview.style.display = "none";
     sliderPreview.style.display = "none";
     
+    //Mark element type input as 4, which is Multple line of textboxes
     document.getElementById("typeInput").value = 4;
     
     document.getElementById("btnSingle").disabled = false;
@@ -285,6 +311,8 @@
    }
    
    function displayLineListTextbox(){
+    //control of other boxes and buttons, now is disable textbox button  
+    //and display preview of single line textbox 
     radioboxPreview.style.display = "none";
     checkboxPreview.style.display = "none";
     singleLinePreview.style.display = "none";
@@ -293,6 +321,7 @@
     ratingScalePreview.style.display = "none";
     sliderPreview.style.display = "none";
     
+    //Mark element type input as 5, which is list of textboxes
     document.getElementById("typeInput").value = 5;
     
     document.getElementById("btnSingle").disabled = false;
@@ -305,6 +334,8 @@
    }
    
    function displayRatingScale(){
+    //control of other boxes and buttons, now is disable Rating Scale button
+    //and display preview of rating scale button textbox 
     radioboxPreview.style.display = "none";
     checkboxPreview.style.display = "none";
     singleLinePreview.style.display = "none";
@@ -313,6 +344,7 @@
     ratingScalePreview.style.display = "block";
     sliderPreview.style.display = "none";
     
+    //Mark element type input as 6, which is rating scale
     document.getElementById("typeInput").value = 6;
     
     document.getElementById("btnSingle").disabled = false;
@@ -325,6 +357,8 @@
    }
    
    function displaySilder(){
+    //control of other boxes and buttons, now is disable Silder button
+    //and display preview of single line textbox
     radioboxPreview.style.display = "none";
     checkboxPreview.style.display = "none";
     singleLinePreview.style.display = "none";
@@ -333,6 +367,7 @@
     ratingScalePreview.style.display = "none";
     sliderPreview.style.display = "block";
     
+    //Mark element type input as 7, which is rating slider.
     document.getElementById("typeInput").value = 7;
     
     document.getElementById("btnSingle").disabled = false;
@@ -347,6 +382,7 @@
   function addNewInputRadioText(){
     // val = optionRadioHTML;
     // radio_group.append(val);
+    // This is function that can add new option for question.
     var div = document.createElement('divNewRadio');
     
     div.classname = 'newRadio';
@@ -367,7 +403,7 @@
   function removeElement() {
     var element = document.getElementById("myDIV");
     element.classList.remove("mystyle");
-}
+  }
    
   // function removeNewCheckbox(input){
   //   checbox_group.removeChild(input.parentNode.parentNode);
