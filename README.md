@@ -16,3 +16,13 @@ How to Run Tests:
 - Run test:
 - Once you are in tests/ folder run i.e. mocha user.test.js in command/terminal
 - Similarly, test for other cases using i.e. mocha option.test.js (example)
+
+Mocha: 
+
+- Mocha, a feature-rich JavaScript test framework running on Node.js has been used to write test cases for the project.
+Asynchronous testing is done. Tests are run serially.
+
+- Mocha utilizes a library called "Chai"
+
+
+
