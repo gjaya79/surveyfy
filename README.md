@@ -65,6 +65,18 @@ Install $project by running:
     rm -r npm node_moudles
     npm install
 
+Installing MongoDB on a Cloud9 workspace
+sudo apt-get install -y mongodb-org
+
+$ mkdir data
+$ echo 'mongod --bind_ip=$IP --dbpath=data --nojournal --rest "$@"' > mongod
+$ chmod a+x mongod
+
+$ ./mongod
+
+
+
+
 How to Run Tests:
 
 - Note: The commands work based on your directory/workspace structure. So, use 'cd' command appropriately to navigate directory structure
