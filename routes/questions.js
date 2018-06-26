@@ -44,10 +44,13 @@ router.get("/new", middleware.isLoggedIn,function(req, res) {
     })
 })
 
-// QUESTION - Create add new question to survey
+
+    
+    // QUESTION - Create add new question to survey
 router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, res) { // }) -1
     
-    Survey.findById(req.params.id, function(err, survey) { // }) -2 
+    if (req.file) {
+        Survey.findById(req.params.id, function(err, survey) { // }) -2 
         if (err) {
             console.log(err)
             res.redirect("/surveys")
@@ -88,8 +91,45 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, re
             
         } // } -3
         
-            }) // }) -2
+            })
+            } else {
+                Survey.findById(req.params.id, function(err, survey) { // }) -2 
+                if (err) {
+                    console.log(err)
+                    res.redirect("/surveys")
+                } else { // } -3
+                Question.create(req.body.question, function(err, question) { // -5
+                    if (err) {
+                        req.flash("error", "The Create Operation not Successful.")
+                        console.log(err)
+                        return res.redirect("back")
+                    } else {
+                        // add new question to survey
+                        // ADD - USERNAME & ID TO QUESTION
+                        question.author.id = req.user._id
+                        question.author.username = req.user.username
+                        question.author.firstName = req.user.firstName
+                         
+                        // SAVE - question
+                        question.save()
+                        
+                        survey.questions.push(question)
+                        survey.save()
+                        // redirect to surveys page
+                        req.flash("success", "Successfully Created a Question.")
+                        res.redirect("/surveys/" + survey._id)
+                    }
+                }) // -5
+                
+                 // }) -4
+                
+            } // } -3
+            
+                })
+                }
+            // }) -2
     }) // }) -1
+
 
 // EDIT - Question Route Edit
 router.get("/:question_id/edit", middleware.checkQuestionOwnership, function(req, res){
