@@ -46,7 +46,9 @@
             <hr></hr>
             <% survey.questions.forEach(function(question, i) { %>
                 <div>
-                <!--<img class="col-md-2 col-sm-2 col-xs-2 img-fluid img-thumbnail" src="<%= question.image %>">-->
+                <%if (question.image) { %>
+                    <img class="col-md-2 col-sm-2 col-xs-2 img-fluid img-thumbnail" src="<%= question.image %>">
+                <%}%>
                     <p>
                         
                         <p>Question: <%= i + 1 %></p>      
@@ -116,8 +118,10 @@
                             <form action="/surveys/<%= survey._id %>/questions/<%= question._id %>?_method=DELETE" method="post">
                                 <button id ="btnRightSpacing" class="btn btn-outline-danger float-right">Delete</button>
                             </form>
+                            <h3 id="btnRightSpacing" class="btn btn-light float-right"><%= question.groupQuestion %></h3>
                         <% } %>
                     </div>
+                    
                     <br></br>
                     <br></br>
             <% }) %>

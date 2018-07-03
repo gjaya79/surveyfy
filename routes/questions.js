@@ -4,8 +4,8 @@ var Survey  = require("../models/survey")
 var Question = require("../models/question")
 var middleware = require("../middleware/index")
 var multer = require('multer');
-var key = 229969594374753
-var route_s = "s-6GAFgsBTEi4JTihe0Bv8d9IJI"
+var route_n = 391186297465389
+var route_s = "FfH30umQHX-JMsTU48tg3uayrVs"
 
 // Multer & Cloudinary Config
 var storage = multer.diskStorage({
@@ -26,8 +26,8 @@ var upload = multer({ storage: storage, fileFilter: imageFilter})
 
 var cloudinary = require('cloudinary');
 cloudinary.config({ 
-  cloud_name: 'surveyfy', 
-  api_key: key, 
+  cloud_name: 'surveyfyassets', 
+  api_key: route_n, 
   api_secret: route_s
 });
 
