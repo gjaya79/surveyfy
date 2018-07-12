@@ -118,7 +118,9 @@
                             <form action="/surveys/<%= survey._id %>/questions/<%= question._id %>?_method=DELETE" method="post">
                                 <button id ="btnRightSpacing" class="btn btn-outline-danger float-right">Delete</button>
                             </form>
-                            <h3 id="btnRightSpacing" class="btn btn-light float-right"><%= question.groupQuestion %></h3>
+                            <% if(question.groupQuestion) { %> 
+                                <h3 id="btnRightSpacing" class="btn btn-light float-right"><%= question.groupQuestion %></h3>
+                            <% } %>
                         <% } %>
                     </div>
                     

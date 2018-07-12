@@ -15,6 +15,7 @@ var questionSchema = mongoose.Schema({
     groupQuestion: String,
     cognitive: String,
     qtopic: String,
+    qtopicother: String,
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
