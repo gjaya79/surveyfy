@@ -113,6 +113,8 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, re
                         // SAVE - question
                         question.save()
                         
+                        console.log(question)
+                        
                         survey.questions.push(question)
                         survey.save()
                         // redirect to surveys page

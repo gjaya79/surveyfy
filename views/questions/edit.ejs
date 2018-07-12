@@ -146,6 +146,8 @@
         <div class="form-group">
             <label for="groupQuestion">Group Question</label>
             <select class="form-control" id="groupQuestion" name="question[groupQuestion]">
+              <option value="" disabled selected>Choose your option</option>
+              <option value="">None</option>
               <option>G1</option>
               <option>G2</option>
               <option>G3</option>
@@ -158,7 +160,10 @@
               <option>G10</option>
             </select>
         </div>
-        <label>The Current Grouping value is: <b><%= question.groupQuestion %></b></label>
+        
+        <% if (question.groupQuestion != "") { %>
+        <label>The Current Grouping value is: <b class="text-primary"><%= question.groupQuestion %></b></label>
+        <% } %>
         
         <br></br>
         <br></br>
@@ -174,6 +179,102 @@
         </div>
         
         <input type="number" class="form-control" id="typeInput" value="1" name="question[types]" style="display: none;">
+        
+        <!-- 
+          More options for Admin
+        -->
+        <fieldset>
+          <p>Cognitive ability of the question <em class="text-primary">[<%= question.cognitive %>]</em></p>
+          <div class="form-group">
+            <input type="radio" id="high" name="question[cognitive]" value="high-cognitive" <% if (question.cognitive == "high-cognitive") { %> checked="checked" <%}%>> 
+            <label for="high">High Cognitive</label>
+          </div>
+          
+          <div class="form-group">
+            <input type="radio" id="medium" name="question[cognitive]" value="medium-cognitive" <% if (question.cognitive == "medium-cognitive") { %> checked="checked" <%}%>>
+            <label for="medium">Medium Cognitive</label>
+          </div>
+          
+          <div class="form-group">
+            <input type="radio" id="low" name="question[cognitive]" value="low-cognitive" <% if (question.cognitive == "low-cognitive") { %> checked="checked" <%}%>>
+            <label for="low">Low Cognitive</label>
+          </div>
+          
+          <div class="form-group">
+            <input type="radio" id="none" name="question[cognitive]" value="dont-know" <% if (question.cognitive == "dont-know") { %> checked="checked" <%}%>>
+            <label for="none">Don't know</label>
+          </div>
+          
+        </fieldset>
+        <br></br>
+        
+        <!-- 
+          Question Topic options for Admin
+        -->
+        <fieldset>
+          
+          <p>Question Topics <em class="text-primary">[<%= question.qtopic %>]</em></p>
+          
+          <div class="form-group float-left">
+            <input type="radio" class="float-left" id="lifestyle" name="question[qtopic]" value="lifestyle" <% if (question.qtopic == "lifestyle,") { %> checked="checked" <%}%>>
+            <label for="lifestyle">Lifestyle</label>
+            
+            <input type="radio" class="float-right" id="health" name="question[qtopic]" value="health" <% if (question.qtopic == "health,") { %> checked="checked" <%}%>>
+            <label for="health">Health</label>
+          </div>
+          
+          <div class="form-group float-left">
+            <input type="radio" class="float-left" id="demographics" name="question[qtopic]" value="demographics" <% if (question.qtopic == "demographics,") { %> checked="checked" <%}%>>
+            <label for="demographics">Demographics</label>
+            
+            <input type="radio" class="float-right" id="education" name="question[qtopic]" value="education" <% if (question.qtopic == "education,") { %> checked="checked" <%}%>>
+            <label for="education">Education</label>
+          </div>
+          
+          <div class="form-group float-left">
+            <input type="radio" class="float-left" id="finance" name="question[qtopic]" value="finance" <% if (question.qtopic == "finance,") { %> checked="checked" <%}%>>
+            <label for="finance">Finances</label>
+            
+            <input type="radio" class="float-right"  id="daily-living" name="question[qtopic]" value="daily-living" <% if (question.qtopic == "daily-living,") { %> checked="checked" <%}%>>
+            <label for="daily-living">Daily Living</label>
+          </div>
+          
+          <div class="form-group float-left">
+            <input type="radio" class="float-left" id="hobbies" name="question[qtopic]" value="hobbies" <% if (question.qtopic == "hobbies,") { %> checked="checked" <%}%>>
+            <label for="hobbies">Hobbies</label>
+            
+            <input type="radio" class="float-right" id="relationships" name="question[qtopic]" value="relationships" <% if (question.qtopic == "relationships,") { %> checked="checked" <%}%>>
+            <label for="relationships">Relationships</label>
+          </div>
+          
+          <div class="form-group float-left">
+            <input type="radio" class="float-left" id="travel" name="question[qtopic]" value="travel" <% if (question.qtopic == "travel,") { %> checked="checked" <%}%>>
+            <label for="travel">Travel</label>
+            
+            <input type="radio" class="float-right" id="transportation" name="question[qtopic]" value="transportation" <% if (question.qtopic == "transportation,") { %> checked="checked" <%}%>>
+            <label for="transportation">Transportation</label>
+          </div>
+          
+          <div class="form-group float-left">
+            <input type="radio" class="float-left" id="technology" name="question[qtopic]" value="technology" <% if (question.qtopic == "technology,") { %> checked="checked" <%}%>>
+            <label for="technology">Technology</label>
+            
+            <input type="radio" class="float-right" id="employment" name="question[qtopic]" value="employment" <% if (question.qtopic == "employment,") { %> checked="checked" <%}%>>
+            <label for="employment">Employment</label>
+          </div>
+          
+          <div class="form-group">
+            <input type="radio" class="float-left" id="entertainment" name="question[qtopic]" value="entertainment" <% if (question.qtopic == "entertainment,") { %> checked="checked" <%}%>>
+            <label for="entertainment">Entertainment</label>
+          </div>
+          
+          <div class="form-group">
+            <label for="topic">Other</label>
+            <input type="text" id="topic" class="form-control" name="question[qtopic]" value="<%= question.qtopic %>">
+          </div>
+          
+        </fieldset>
+        <br></br>
         
         <button type="submit" class="btn btn-primary float-right">Edit Question</button>
         

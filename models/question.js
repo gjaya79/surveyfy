@@ -13,6 +13,8 @@ var questionSchema = mongoose.Schema({
     instruction: String,
     image: String,
     groupQuestion: String,
+    cognitive: String,
+    qtopic: String,
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
