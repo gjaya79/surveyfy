@@ -184,14 +184,41 @@
         <br></br>
         <p>Options: </p>
         
+        <!--Revised in July 17, 2018, add the skip pattern code>
         <!--Display options with array number inside-->
         <div class="form-group" id="single_select">
           <div class="form-group" id="radio_group">
-            <label for="option1">Answer 1</label>
-            <input type="text" class="form-control" name="question[options][0][content]">
+            <div>
+              <label for="option1">Answer 1</label>
+              <input type="text" class="form-control" name="question[options][0][content]">
+              
+              <!--Revised in July 17, 2018, add this part as skip pattern, and change the block to div-->
+              <label>Jump to</label>
+              <select class="form-control" name="">
+                <option>None</option>
+                <option>Q1</option>
+                <option>Q2</option>
+                <option>Q3</option>
+                <option>Q4</option>
+              </select>
+            </div>
             
-            <label for="option2">Answer 2</label>
-            <input type="text" class="form-control" name="question[options][1][content]">
+            <br></br>
+            <br></br>
+            <div>
+              <label for="option2">Answer 2</label>
+              <input type="text" class="form-control" name="question[options][1][content]">
+              
+              <!--Revised in July 17, 2018, add this part as skip pattern, and change the block to div-->
+              <label>Jump to</label>
+              <select class="form-control" name="">
+                <option>None</option>
+                <option>Q1</option>
+                <option>Q2</option>
+                <option>Q3</option>
+                <option>Q4</option>
+              </select>
+            </div>
             
           </div>
           <button id="addButton_single_select" onclick="addNewInputRadioText()" type="button" onclick="addNewInputRadioText()" class="btn btn-primary mb1 bg-teal">Add</button>
@@ -459,6 +486,7 @@
     document.getElementById("btnRateSilder").disabled = true;
    }
   
+ // Revised in July 17, 2018, add the skip pattern code, use this as new skip pattern Option
   // This is function that can add new option for question.
   function addNewInputRadioText(){
     // val = optionRadioHTML;
@@ -477,8 +505,18 @@
                     optionCounter 
                     + 
                     '][content]">'+
-                    ' <input type="button" value="remove" onclick="removeNewRadio(this)">'+
-                    '</div>';
+                    
+                    '<label>Jump to</label>'+
+                      '<select class="form-control" name="">'+
+                        '<option>None</option>'+
+                        '<option>Q1</option>'+
+                        '<option>Q2</option>'+
+                        '<option>Q3</option>'+
+                        '<option>Q4</option>'+
+                      '</select>'+
+                      
+                      ' <input type="button" value="remove" onclick="removeNewRadio(this)">'+
+                      '</div>';
     
     radioboxGroup.appendChild(div);
   }

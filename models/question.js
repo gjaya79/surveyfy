@@ -37,8 +37,23 @@ var questionSchema = mongoose.Schema({
        default:100
     },
     options:[{
+        OId:{
+          type: mongoose.Schema.Types.ObjectId  
+        },
         content: {
             type: String
+        }
+    }],
+	// New Array of Skip pattern
+    skipPattern:[{
+        trickOption: {
+            type: Number
+        },
+        CurrentQuestion:{
+            type: Number
+        },
+        NextQuestion:{
+            type: Number
         }
     }]
 })
