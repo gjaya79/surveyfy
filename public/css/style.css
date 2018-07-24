@@ -21,6 +21,11 @@ footer{
 #btnRightSpacing {
     margin-right: 1em;
 }
+
+#skipID {
+  alignment-baseline: central;
+  width: 50%;
+}
  
 #delete-inline {
     display: inline;

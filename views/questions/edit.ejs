@@ -23,7 +23,7 @@
       <div id="Textbox_Group">
         <h4 class="text-left">Open Text Field Choice</h4>
         <button id="btnTxtBox" type="button" onclick="displayTextbox()" class="btn btn-primary mb1 bg-teal" name=="3" >Textbox</button>
-        <button id="btnMultTxt" type="button" onclick="displayMultLineTextbox()" class="btn btn-primary mb1 bg-teal">Mult Lines of Textboxes</button>
+        <button id="btnMultTxt" type="button" onclick="displayMultLineTextbox()" class="btn btn-primary mb1 bg-teal">Multi Row Textbox</button>
         <button id="btnTxtList" type="button" onclick="displayLineListTextbox()" class="btn btn-primary mb1 bg-teal"> List of Textboxes</button>
       </div>
       <br></br>
@@ -119,6 +119,7 @@
         Draging the button to rate one stuff.
         <input type="range" min="1" max="100" value="50">
       </div>
+      <br/>
       
       </body>
       
@@ -170,6 +171,7 @@
         <% question.options.forEach(function(options) { %>
           <label for="Newoption">Answer <%= question.options.indexOf(options) + 1%> </label>
           <input type="text" class="form-control" name="question[options][<%=question.options.indexOf(options)%>][content]" value="<%=options.content %>">
+          
           <script>addCounter();</script>
         <% }) %>
         </div>
