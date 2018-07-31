@@ -41,7 +41,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 // Setting public directory
 app.use(express.static(__dirname + "/public"));
-
+app.use('/javascript', express.static(__dirname + "/public/js"));
 // Setting method override for EDIT and UPDATE
 app.use(methodOverride("_method"))
 

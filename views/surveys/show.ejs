@@ -1,3 +1,4 @@
+
 <% include ../partials/header %>
 
 <!-- 
@@ -6,6 +7,7 @@
   With additional option to Edit, Delete and Add Questions to the survey.
 -->
 <div class="container">
+
     <div class="card card-body mb-2">
         <h1><%= survey.name %></h1>
         <p><%= survey.description %></p>
@@ -44,7 +46,7 @@
             
             <br></br>
             <hr></hr>
-            <% survey.questions.forEach(function(question, i) { %>
+            <% survey.questions.forEach(function(question, i) {%>
                 <div>
                 <%if (question.image) { %>
                     <img class="col-md-2 col-sm-2 col-xs-2 img-fluid img-thumbnail" src="<%= question.image %>">

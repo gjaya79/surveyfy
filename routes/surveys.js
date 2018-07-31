@@ -222,6 +222,7 @@ router.get("/response/:id", function(req, res) {
         if (error) {
             console.log(error)
         } else {
+            console.log(foundSurvey)
             res.render("respondents/respondent_answer", {survey: foundSurvey})
         }
     })

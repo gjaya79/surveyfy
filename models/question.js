@@ -49,10 +49,10 @@ var questionSchema = mongoose.Schema({
         trickOption: {
             type: Number
         },
-        CurrentQuestion:{
+        currentQuestion:{
             type: Number
         },
-        NextQuestion:{
+        nextQuestion:{
             type: Number
         }
     }]

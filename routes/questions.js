@@ -75,7 +75,7 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, re
                     question.author.id = req.user._id
                     question.author.username = req.user.username
                     question.author.firstName = req.user.firstName
-                     
+                     console.log(question)
                     // SAVE - question
                     question.save()
                     
