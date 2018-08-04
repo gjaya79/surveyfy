@@ -210,27 +210,18 @@
             <div>
               <label for="option1">Answer 1</label>
               <input type="text" class="form-control" name="question[options][0][content]">
-              
-              
-              
-              
-              
+            
               <!--Revised in July 17, 2018, add this part as skip pattern, and change the block to div-->
               <label>Skip to</label>
-              <select class="form-control" name="">
+              <select class="form-control" name="question[options][0][skipId]">
                 <option>None</option>
                 <% survey.questions.forEach(function(question, i) { %>
-                <option>
-
-                    
-                        
+                <option value="<%= question %>">
                         <p>Question: <%= i + 1 %></p>      
                         <!--<strong>-->
                         <!--<%= question.text %>-->
                         <!--</strong>-->
-                    
-                        
-                       
+
                 </option>
                 <% }) %>
               </select>
@@ -243,20 +234,15 @@
               
               <!--Revised in July 17, 2018, add this part as skip pattern, and change the block to div-->
               <label>Skip to</label>
-              <select class="form-control" name="">
+              <select class="form-control" name="question[options][1][skipId]">
                 <option>None</option>
                 <% survey.questions.forEach(function(question, i) { %>
-                <option>
-
-                    
-                        
+                <option value="<%= question %>">
                         <p>Question: <%= i + 1 %></p>      
                         <!--<strong>-->
                         <!--<%= question.text %>-->
                         <!--</strong>-->
-                    
-                        
-                       
+                   
                 </option>
                 <% }) %>
               </select>
@@ -341,7 +327,8 @@
 <script>
   //counter variable of question options.
   var optionCounter = 1;
-  
+  var testSurvey = <%- JSON.stringify(survey)%>;
+  console.log(testSurvey);
   var checkbox = document.getElementById("multiple_select");
   var radiobox = document.getElementById("single_select");
   var checkboxGroup = document.getElementById("checbox_group");
@@ -551,10 +538,13 @@
                     '][content]">'+
                     
                     '<label>Skip to</label>'+
-                      '<select class="form-control" name="">'+
+                      '<select class="form-control" name="question[options][' +
+                    optionCounter 
+                    + 
+                    '][skipId]">'+
                       '<option>None</option>'+
                       '<% survey.questions.forEach(function(question, i) { %>' +
-                        '<option>' +
+                        '<option value= "<%= question %>">' +
 
                     
                         

@@ -12,7 +12,8 @@ var questionSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Question"
     },
-    content:String
+    content:String,
+    skipId: String
 })
 
 module.exports = mongoose.model("Option", questionSchema) 

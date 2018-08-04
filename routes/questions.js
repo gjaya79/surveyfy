@@ -93,6 +93,7 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, re
         
             })
             } else {
+                //console.log(req.body.question.options);
                 Survey.findById(req.params.id, function(err, survey) { // }) -2 
                 if (err) {
                     console.log(err)

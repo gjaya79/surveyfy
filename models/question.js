@@ -42,7 +42,8 @@ var questionSchema = mongoose.Schema({
         },
         content: {
             type: String
-        }
+        }, 
+        skipId: String
     }],
 	// New Array of Skip pattern
     skipPattern:[{
