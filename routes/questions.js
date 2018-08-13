@@ -160,6 +160,11 @@ router.put("/:question_id", middleware.checkQuestionOwnership, function(req, res
 // DELETE - Question Route Delete
 router.delete("/:question_id", middleware.checkQuestionOwnership, function(req, res) {
     // Find ID and Delete the question_id
+    Survey.findByIdAndUpdate(req.params.id, { "$pull": { "questions": req.params.question_id }}, function(err, data) {
+        if (err) {
+            console.log(err)
+        }
+    })
     Question.findByIdAndRemove(req.params.question_id, function(err){
         if (err) {
             // Redirects back to the previous page
