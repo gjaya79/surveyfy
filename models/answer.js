@@ -33,6 +33,9 @@ var respondentsSchema = mongoose.Schema({
         },
         responseTime:{
             type:String
+        },
+        questionLoadTime: {
+            type: String
         }
     }]
     

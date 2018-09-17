@@ -82,8 +82,21 @@
             <p>
                  Question <%-c=i+1%> 
             </p>    
-            
+                
+                <!-- time calcualtion starts from here -->
+                <script>
+                    var LoadTime = 0;
+                    var loadBeginTime = performance.now();
+                </script>
                 <strong> <%= question.text %>  </strong>
+               
+                <input id="loadQuestionTime[Q<%=i%>]" type="text" name="answer[answers][<%=i%>][loadQuestionTime]" value="">
+                 <script>
+                    var loadEndTime = performance.now();
+                    LoadTime =(( (loadEndTime - loadBeginTime)/1000) % 60);
+                    document.getElementById("loadQuestionTime[Q"+ <%=i%>+"]").value = LoadTime;
+                </script>
+                 <!-- time calcualtion ends from here -->
                 
                 <!--Input of question types,id,and respond time for individual question -->
                 <input type="number" name="answer[answers][<%=i%>][types]" value="<%-question.types%>" style="display: none;">
@@ -186,9 +199,12 @@
       /*  var positionObject = {};
         positionObject['question'+count] = 0
         var positionObjectTrack = ['question'+count];*/
-       
+        
+        
+        
         //function for next button.
         function nextQuestion() {
+            JCounter++;
             if(!submit) {
                 var actualArrayIndex = 0;
                 var skipIdQsnFound = false;
@@ -314,10 +330,19 @@
       
         } 
           getPrecentage();
+          // bug code 
+          //Compute repsond time of question now.
+           var respondEndTime = performance.now();
+           var respondTime = (((respondEndTime - respondBeginTime)/1000) % 60);
+           respondBeginTime = performance.now();
+           totalTime+= respondTime;
+
+           document.getElementById("respondTime[Q"+(JCounter-1)+"]").value = respondTime + "s"
+           document.getElementById("totalTime").value = totalTime + "s";
         }
         
         function previousQuestion() {
-             
+            JCounter--;
             submit = false;
             if(forPrevious.length>1) {
                 serverData[forPrevious[forPrevious.length -1]].isTraversed = false;
@@ -350,6 +375,7 @@
             getPrecentage();
             //console.log(forPrevious)
             //console.log(previousGroup)
+            respondBeginTime = performance.now();
         }
         function updateCurrentSkip(skipId, id) {
             if(skipId)
