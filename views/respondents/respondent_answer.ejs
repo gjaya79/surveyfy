@@ -9,27 +9,25 @@
 <div id="welcomePage">
     <div class="container">
      <div class="card card-body mb-2 bg-light">
-        <input id="exceptTime" type="number" name="answer[exceptTime]" value="5" style="display: none;">
+        
          <h1>Welcome!</h1>
          <p>Welcome to our survey. This survey need few minutes. 
          Before you take this survey, how many minutes you 
          willing to allocate for this survey?</p>
          <!--Let respondents to select their except time and collect them.-->
-          <div class="container">
-              <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-secondary" onclick="exceptTimeSelect(5)">5</button>
+         
+         <div class="form-group row">
+              <div class="col-xs-2">
+                <b><lable>Minutes: </lable></b>
+                <input type="number" id="customExceptTime" value="" min="0" step="5">
               </div>
-              <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-secondary" onclick="exceptTimeSelect(10)">10</button>
+              <div class="col-xs-3">
+                  
               </div>
-              <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-secondary" onclick="exceptTimeSelect(15)">15</button>
+              <div class="col-xs-4">
+                  
               </div>
-              <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-secondary" onclick="exceptTimeSelect(20)">20</button>
-              </div>
-              <input type="number" id="customExceptTime" value="">
-          </div>
+         </div>
           <button id="startButton" class="btn btn-primary btn-sm" onclick="beginAnswer()">Start</button>
      </div>
      </div>
@@ -55,6 +53,7 @@
             <!--<p><em>Created by - <%= survey.author.firstName %></em></p>-->
         <form action="/surveys/response/<%= survey._id %>" id="surveySubmitForm" method="post">
             <!--input of surveyID and Total time using-->
+            <input id="exceptTime" type="number" name="answer[exceptTime]" value="" style="display: none;" min="0" step="5">
             <input type="text" name="answer[survey]" value="<%=survey._id%>" style="display: none;">
             <input id="totalTime" type="text" name="answer[totalAnswerTime]" value="" style="display: none;">
             
@@ -142,6 +141,15 @@
                     <span>Min: <%= question.silderMin%></span>
                 <% } %>
                 <br></br>
+                
+                <!--Sub questions - revised in 9/23-->
+                <strong> <%= question.SubQtext %>  </strong>
+                 <% question.SubOptions.forEach(function(SubOption,k) {%>
+                    <p>
+                      <input type="radio" id="radioTest[subQ<%=i%>][<%-k%>]" name="answer[subAnswers][<%-i%>][content]" value="<%= SubOption.content %>">
+                      <label for="radioTest[subQ<%=i%>][<%-k%>]"><%= SubOption.content %></label>
+                    </p>
+                 <% }) %>
         </div>
         <% }) %>
 </div>

@@ -14,7 +14,7 @@ var respondentsSchema = mongoose.Schema({
     },
     createdAt: {type: Date, default: Date.now},
     exceptTime:{
-        type:String
+        type: String,
     },
     totalAnswerTime:{
         type:String
@@ -35,6 +35,11 @@ var respondentsSchema = mongoose.Schema({
             type:String
         },
         questionLoadTime: {
+            type: String
+        }
+    }],
+    subAnswers: [{
+        content:  {
             type: String
         }
     }]

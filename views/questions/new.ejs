@@ -130,12 +130,9 @@
       
       <% survey.questions.forEach(function(question, i) { %>
                 <p>
-
                         
-                        <p>Question: <%= i + 1 %></p>      
-                        <strong>
-                        <%= question.text %>
-                        </strong>
+                        
+                        <strong><p>Question: <%= i + 1 %></p></strong>
                     
                         
                        
@@ -250,10 +247,18 @@
             <br>
             <hr id="skipID">
           </div>
-          <button id="addButton_single_select" onclick="addNewInputRadioText()" type="button" onclick="addNewInputRadioText()" class="btn btn-primary mb1 bg-teal">Add</button>
+          <button id="addButton_single_select" onclick="addNewInputRadioText()" type="button" onclick="addNewInputRadioText()" class="btn btn-info mb1 bg-teal">Add</button>
         </div>
         
         <input type="number" class="form-control" id="typeInput" value="1" name="question[types]" style="display: none;">
+        
+        
+        
+                
+              
+              <input type="number" class="form-control" id="qNumber" name="question[qNumber]" style="display: none;" value="<%= survey.questions.length + 1 %>">
+
+        
         
         <!-- 
           More options for Admin
@@ -314,6 +319,36 @@
         </div>
         </fieldset>
         
+        <hr>
+        
+        <!--Revised in 9/22/2018, Add Subquestion by Yuxuan He-->
+        Sub question:
+        <div class="form-group">
+          <label for="name">Sub Question Title</label>
+          <input type="text" class="form-control" name="question[SubQtext]">
+        </div>
+        
+        <div class="form-group" id="single_select">
+          <div class="form-group" id="radio_group">
+            <label for="subOption1">Answer 1</label>
+            <input type="text" class="form-control" name="question[SubOptions][0][content]">
+            
+            <label for="subOption2">Answer 2</label>
+            <input type="text" class="form-control" name="question[SubOptions][1][content]">
+            
+            <label for="subOption3">Answer 3</label>
+            <input type="text" class="form-control" name="question[SubOptions][2][content]">
+            
+            <label for="subOption4">Answer 4</label>
+            <input type="text" class="form-control" name="question[SubOptions][3][content]">
+            
+            <label for="subOption5">Answer 5</label>
+            <input type="text" class="form-control" name="question[SubOptions][4][content]">
+            
+            
+          </div>
+          <!--<button id="addButton_new_subOption" onclick="addNewSubOption()" type="button" class="btn btn-primary mb1 bg-teal">Add</button>-->
+        </div>
         
         <button type="submit" class="btn btn-primary float-right">Create Question</button>
         
@@ -329,6 +364,7 @@
   var optionCounter = 1;
   var testSurvey = <%- JSON.stringify(survey)%>;
   console.log(testSurvey);
+  var subOptionCounter = 1;
   var checkbox = document.getElementById("multiple_select");
   var radiobox = document.getElementById("single_select");
   var checkboxGroup = document.getElementById("checbox_group");
@@ -350,9 +386,16 @@
     optionCounter++;
   }
   
+  //add Counter of question options
+  function addSubCounter(){
+    subOptionCounter++;
+  }
+  
   function disCounter(){
     optionCounter = optionCounter - 1;
   }
+  
+  
   
    function displayRadiobox(){
     
@@ -565,6 +608,34 @@
                       '<hr id="skipID">';
     
     radioboxGroup.appendChild(div);
+  }
+  
+  // Revised in Sep 21, 2018, function for add subquestion option.
+   function addNewSubOption(){
+    // val = optionRadioHTML;
+    // radio_group.append(val);
+    addSubCounter();
+    var innerCounter = subOptionCounter + 1;
+    var div = document.createElement('divSubQuestion');
+    
+    div.classname = 'subQuestion';
+    
+    div.innerHTML =  '<div class="form-group">'+
+                    '<label for="option1">Answer '+
+                    innerCounter+
+                    '</label>'+
+                    '<input type="text" class="form-control" name="question[SubOptions][' +
+                    optionCounter 
+                    + 
+                    '][content]">'+
+                    ' <input type="button" value="remove" onclick="removeNewRadio(this)">'+
+                    '</div>';
+    
+    radioboxGroup.appendChild(div);
+  }
+  
+   function disSubCounter(){
+    subOptionCounter = subOptionCounter - 1;
   }
   
   function removeNewRadio(input){

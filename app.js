@@ -81,3 +81,7 @@ app.use("/surveys/:id/questions", questionRoutes)
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("Surveyfy Server Started")
 })
+
+console.log("Avinash")
+console.log(process.env.IP)
+console.log(process.env.PORT)

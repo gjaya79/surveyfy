@@ -135,15 +135,35 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, re
 
 
 // EDIT - Question Route Edit
-router.get("/:question_id/edit", middleware.checkQuestionOwnership, function(req, res){
-    Question.findById(req.params.question_id, function(err, foundQuestion) {
-        if (err) {
-            res.redirect("back")
-        } else {
-            res.render("questions/edit", {survey_id: req.params.id, question: foundQuestion})
-        }
-    })
+// router.get("/:question_id/edit", middleware.checkQuestionOwnership, function(req, res){
+//     Question.findById(req.params.question_id, function(err, foundQuestion) {
+//         if (err) {
+//             res.redirect("back")
+//         } else {
+//             res.render("questions/edit", {survey_id: req.params.id, question: foundQuestion})
+//         }
+//     })
    
+// });
+
+// EDIT QUESTION with SKIP PATTERN - Ganesh Velu // 29th September 2018
+router.get("/:question_id/edit", middleware.checkQuestionOwnership, function (req, res) {
+    Question.findById(req.params.question_id, function (err, foundQuestion) {
+
+        if (err) {
+            console.log(err);
+            res.redirect("back")
+        }
+        Survey.findById(req.params.id, function (err, survey) {
+            if (err) {
+                console.log(err);
+                res.redirect("back");
+            } else {
+                res.render("questions/edit", { survey_id: req.params.id, question: foundQuestion, survey: survey });
+            }
+        });
+    })
+
 });
 
 // UPDATE - Question Route Update

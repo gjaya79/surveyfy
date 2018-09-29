@@ -16,6 +16,9 @@ var questionSchema = mongoose.Schema({
     cognitive: String,
     qtopic: String,
     qtopicother: String,
+    qNumber: {
+        type: String,
+    },
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
@@ -44,6 +47,17 @@ var questionSchema = mongoose.Schema({
             type: String
         }, 
         skipId: String
+    }],
+    //sub question info
+    SubQtext: String,
+    SubOptions:[{
+        OId:{
+
+          type: mongoose.Schema.Types.ObjectId  
+        },
+        content: {
+            type: String
+        }
     }],
 	// New Array of Skip pattern
     skipPattern:[{
