@@ -67,10 +67,12 @@
                     <% if (question.types == 1) { %>
                         <div>
                             <% question.options.forEach(function(options) { %>
+
                                 <p>
                                   <input type="radio" id="radioTest<%- question.options.indexOf(options)%>" value="<%= options.content %>" name="radio-group">
                                   <label for="radioTest<%- question.options.indexOf(options)%>"><%= options.content %></label>
                                 </p>
+                            
                             <% }) %>
                         </div>
                     <% } else if (question.types == 2) { %>
@@ -114,10 +116,12 @@
                         
                     <strong> <%= question.SubQtext %>  </strong>
                      <%question.SubOptions.forEach(function(SubOption,k) {%>
+                        <% if (SubOption.content) { %>
                         <p>
                           <input type="radio" id="radioTest[Q<%=i%>][<%-k%>]" value="<%= SubOption.content %>">
                           <label for="radioTest[subQ<%=i%>][<%-k%>]"><%= SubOption.content %></label>
                         </p>
+                        <% } %>
                      <% }) %>
                      
                     <!--button group place adjustment and additional functionality for Edit and Delete options for the question.-->

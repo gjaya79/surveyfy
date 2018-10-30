@@ -143,6 +143,7 @@ router.get("/report/:id", middleware.isLoggedIn, function(req, res) {
 router.get("/:id/edit", middleware.checkSurveyOwnership, function(req, res) {
 
     Survey.findById(req.params.id, function(err, foundSurvey) {
+        
         res.render("surveys/edit", {survey: foundSurvey})
     })
 })
@@ -242,6 +243,7 @@ router.post("/response/:id", function(req, res) {
         } else {
             console.log("DEBUG: displaying req data")
             console.log(req.body.answer)
+            let answers = req.body.answer;
             Answer.create(req.body.answer,function(err,answer){
                 if (err) {
                     req.flash("error", "The Answer is not Successful.")

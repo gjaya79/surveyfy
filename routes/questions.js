@@ -148,18 +148,31 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, re
 
 // EDIT QUESTION with SKIP PATTERN - Ganesh Velu // 29th September 2018
 router.get("/:question_id/edit", middleware.checkQuestionOwnership, function (req, res) {
-    Question.findById(req.params.question_id, function (err, foundQuestion) {
+    Question.findById(req.params.question_id).lean().exec(function (err, foundQuestion) {
 
         if (err) {
             console.log(err);
             res.redirect("back")
         }
-        Survey.findById(req.params.id, function (err, survey) {
+        Survey.findById(req.params.id, function (err, surveys) {
             if (err) {
                 console.log(err);
                 res.redirect("back");
             } else {
-                res.render("questions/edit", { survey_id: req.params.id, question: foundQuestion, survey: survey });
+                console.log(surveys)
+                let surveyTrack = {}
+                surveys.questions.forEach((survey,i) => {
+                surveyTrack[survey] = 'Q'+(i+1);
+                });
+                foundQuestion.options.forEach(option => {
+                    if(option.skipId) {
+                        option.skippedToQuestion = surveyTrack[option.skipId]
+                    }
+                })
+             
+                console.log('-----------------------ssssssssssss------------------------------------------')
+                console.log(foundQuestion.options)
+                res.render("questions/edit", { survey_id: req.params.id, question: foundQuestion, survey: surveys });
             }
         });
     })
@@ -168,6 +181,7 @@ router.get("/:question_id/edit", middleware.checkQuestionOwnership, function (re
 
 // UPDATE - Question Route Update
 router.put("/:question_id", middleware.checkQuestionOwnership, function(req, res) {
+  console.log(req.body.question.options)
     Question.findByIdAndUpdate(req.params.question_id, req.body.question, function(err, updatedQuestion){
       if(err){
           res.redirect("back");

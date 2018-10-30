@@ -16,6 +16,8 @@
          willing to allocate for this survey?</p>
          <!--Let respondents to select their except time and collect them.-->
          
+         <p><%= survey.description %></p>
+         
          <div class="form-group row">
               <div class="col-xs-2">
                 <b><lable>Minutes: </lable></b>
@@ -41,15 +43,16 @@
     <div>
         <button id="previousButton" class="btn btn-secondary float-left prevnext" onclick="previousQuestion()" style="display: none;">Previous</button>
 		<button id="nextButton" class="btn btn-primary float-right prevnext" onclick="nextQuestion()">Next</button>
+			
 		<input type="button" id="submitButton" class="btn btn-success float-right" onclick="final_submit()" value="Finish" style="display: none;"/>
     </div>
 
     <br></br>
     <!--Survey information display-->
     <div id="surveyTitle">
-        <div id="surveyTitleCard" class="card card-body mb-2">
+        <div id="surveyTitleCard">
             <!--<h1><%= survey.name %></h1>-->
-            <p><%= survey.description %></p>
+            
             <!--<p><em>Created by - <%= survey.author.firstName %></em></p>-->
         <form action="/surveys/response/<%= survey._id %>" id="surveySubmitForm" method="post">
             <!--input of surveyID and Total time using-->
@@ -62,7 +65,7 @@
 </div>
 
     
-    <hr></hr>
+
     
 <!--List all question and hide them for this div block-->
 <div class="container"> 
@@ -89,7 +92,7 @@
                 </script>
                 <strong> <%= question.text %>  </strong>
                
-                <input id="loadQuestionTime[Q<%=i%>]" type="text" name="answer[answers][<%=i%>][loadQuestionTime]" value="">
+                <input id="loadQuestionTime[Q<%=i%>]" type="hidden" name="answer[answers][<%=i%>][loadQuestionTime]" value="">
                  <script>
                     var loadEndTime = performance.now();
                     LoadTime =(( (loadEndTime - loadBeginTime)/1000) % 60);
@@ -102,6 +105,12 @@
                 <input type="text" name="answer[answers][<%=i%>][qid]" value="<%-question._id%>" style="display: none;">    
                 <input id="respondTime[Q<%=i%>]" type="text" name="answer[answers][<%=i%>][responseTime]" value="" style="display: none;">
                 <br></br>
+                
+                <script>
+                    var LoadOptionTime = 0;
+                    var loadOptionBeginTime = performance.now();
+                </script>
+               
                 
                 <!--display options:-->
                 <!--display question preview based on types, with if statement-->
@@ -120,10 +129,10 @@
                         </p>
                     <% }) %>
                 <% } else if(question.types == 3){ %>
-                    <input type="text" value="" name="answer[answers][<%-i%>][content]" >
+                    <input type="text" class="form-control" value="" name="answer[answers][<%-i%>][content]" placeholder="Enter Text Here...">
                     </textarea>
                 <% } else if(question.types == 4){ %>
-                    <textarea rows="4" cols="50"  name="answer[answers][<%-i%>][content]"></textarea>
+                    <textarea rows="4" cols="50"  class="form-control" name="answer[answers][<%-i%>][content]" placeholder="Enter Text Here..."></textarea>
                     </textarea>
                  <% } else if (question.types == 5) { %>
                     <% question.options.forEach(function(options) { %>
@@ -145,11 +154,23 @@
                 <!--Sub questions - revised in 9/23-->
                 <strong> <%= question.SubQtext %>  </strong>
                  <% question.SubOptions.forEach(function(SubOption,k) {%>
-                    <p>
-                      <input type="radio" id="radioTest[subQ<%=i%>][<%-k%>]" name="answer[subAnswers][<%-i%>][content]" value="<%= SubOption.content %>">
-                      <label for="radioTest[subQ<%=i%>][<%-k%>]"><%= SubOption.content %></label>
-                    </p>
-                 <% }) %>
+                 <% if (SubOption.content) { %>
+                      
+                      <frameset cols="*">
+                          <input type="radio" id="radioTest[subQ<%=i%>][<%-k%>]" name="answer[subAnswers][<%-i%>][content]" value="<%= SubOption.content %>">
+                          <label for="radioTest[subQ<%=i%>][<%-k%>]"><%= SubOption.content %></label>
+                      </frameset>
+                    
+                      
+                    
+                <% } %>
+                <% }) %>
+                 <input id="loadOptionQuestionTime[Q<%=i%>]" type="text" name="answer[answers][<%=i%>][loadOptionTime]" value="" >
+                 <script>
+                    var loadOptionEndTime = performance.now();
+                    LoadOptionTime =(( (loadOptionEndTime - loadOptionBeginTime)/1000) % 60);
+                    document.getElementById("loadOptionQuestionTime[Q"+ <%=i%>+"]").value = LoadOptionTime;
+                </script>
         </div>
         <% }) %>
 </div>
@@ -158,6 +179,8 @@
         <div class="container">
             <!--<button type="submit" class="btn btn-primary float-right">Submit</button>-->
             <!--<input type="button" class="btn btn-primary float-right" onclick="final_submit()" value="Submit">-->
+            <input id="demoResW" type="string" name="answer[cliWidth]" value="" style="display: none;">
+            <input id="demoResH" type="string" name="answer[cliHeight]" value="" style="display: none;">
             <input type="button" id="submitButton" class="btn btn-primary float-right" onclick="final_submit()" value="Submit" style="display: none;"/>
         </div>
     </form>
@@ -212,6 +235,7 @@
         
         //function for next button.
         function nextQuestion() {
+            console.log(skipIdMap)
             JCounter++;
             if(!submit) {
                 var actualArrayIndex = 0;
@@ -219,6 +243,7 @@
                 var groupQsnFound=0;
                 document.getElementById("question"+lastIndex).style.display="none";
               skipIdMap.lastIndex = currentSkipId;
+              console.log(skipIdMap)
             for(i=0;i<serverData.length;i++) {
                 //console.log(serverData[i]._id)
                if(currentSkipId && currentSkipId === serverData[i]._id && !serverData[i].isTraversed) {
@@ -228,12 +253,11 @@
                } else{
                    document.getElementById("question"+i).style.display="none";
                }
-               //console.log(skipIdQsnFound)
             }
             
             if(!skipIdQsnFound) {
                 for(i=0; i<serverData.length;i++) {
-                    if(serverDataCopy[i].groupQuestion === previousGroup && !serverDataCopy[i].isTraversed) {
+                    if(previousGroup && serverDataCopy[i].groupQuestion === previousGroup && !serverDataCopy[i].isTraversed) {
                         document.getElementById("question"+i).style.display="block";
                         lastIndex = i;
                         groupQsnFound = i;
@@ -245,14 +269,16 @@
             }
             
             if(actualArrayIndex && !groupQsnFound) {
-                lastIndex = actualArrayIndex;
+                lastIndex = lastIndex+1
+                console.log(lastIndex)
+              
                document.getElementById("question"+lastIndex).style.display="block";
             }
             
             serverData[lastIndex].isTraversed = true;
             forPrevious.push(lastIndex);
             //console.log(forPrevious)
-            if(forPrevious.length == serverData.length) {
+            if(serverData.length == (lastIndex+1)) {
                submit = true;
                document.getElementById("nextButton").style.display="none";
                document.getElementById("submitButton").style.display="block";
@@ -335,7 +361,6 @@
            //document.getElementById("totalTime").value = totalTime + "s";
         }*/
         currentSkipId = 0;
-      
         } 
           getPrecentage();
           // bug code 
@@ -356,6 +381,9 @@
                 serverData[forPrevious[forPrevious.length -1]].isTraversed = false;
                 let temp = forPrevious[forPrevious.length-2]
                 currentSkipId=skipIdMap[temp] || 0
+                console.log(currentSkipId)
+                console.log(skipIdMap)
+                console.log(forPrevious)
             for(i=0;i<serverData.length;i++){
               if(i=== temp) {
                  // console.log(serverData[i]);
@@ -391,7 +419,7 @@
             currentSkipId = skipId;
         }
         function getPrecentage(){
-            var value = (forPrevious.length/totalQuestions)*100
+            var value = parseInt(((lastIndex+1)/totalQuestions)*100)
             document.getElementById('progressBar1').style.width = value+ '%';
             document.getElementById('pid1').innerHTML = value+ '%';
         }
@@ -413,6 +441,11 @@
             document.getElementById("totalTime").value = totaltime + "s"
         }
         
+    </script>
+    
+    <script type="text/javascript">
+        document.getElementById("demoResW").value =window.innerWidth;
+        document.getElementById("demoResH").value = window.innerHeight;
     </script>
 
 </div>

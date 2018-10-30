@@ -13,6 +13,12 @@ var respondentsSchema = mongoose.Schema({
         ref: 'Survey'
     },
     createdAt: {type: Date, default: Date.now},
+    cliWidth: {
+        type: String
+    },
+    cliHeight: {
+        type: String
+    },
     exceptTime:{
         type: String,
     },
@@ -29,12 +35,16 @@ var respondentsSchema = mongoose.Schema({
             default:1
         },
         content: {
-            type: String
+            type: String,
+            default: 'Not Answered'
         },
         responseTime:{
             type:String
         },
         questionLoadTime: {
+            type: String
+        },
+        loadOptionTime: {
             type: String
         }
     }],
