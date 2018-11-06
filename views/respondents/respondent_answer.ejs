@@ -151,20 +151,38 @@
                 <% } %>
                 <br></br>
                 
+                <% if (question.SubQtext) { %>
+                
                 <!--Sub questions - revised in 9/23-->
                 <strong> <%= question.SubQtext %>  </strong>
-                 <% question.SubOptions.forEach(function(SubOption,k) {%>
-                 <% if (SubOption.content) { %>
-                      
-                      <frameset cols="*">
-                          <input type="radio" id="radioTest[subQ<%=i%>][<%-k%>]" name="answer[subAnswers][<%-i%>][content]" value="<%= SubOption.content %>">
-                          <label for="radioTest[subQ<%=i%>][<%-k%>]"><%= SubOption.content %></label>
-                      </frameset>
-                    
-                      
-                    
+                
+                
+                 <div style="overflow-x:auto;">
+                        <table>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>Strongly Disagree</th>
+                            <th>Disagree</th>
+                            <th>Neither Agree nor Disagree</th>
+                            <th>Agree</th>
+                            <th>Strongly Agree</th>
+                        </tr>
+                         <%question.SubOptions.forEach(function(SubOption,k) {%>
+                            <tr>
+                              <td><%= SubOption.content %></td>
+                              <td><input type="radio" id="radioTest[Q<%=i%>][<%-k%>][0]" name="answer[subAnswers][Q<%=i%>][<%-k%>]" value="0" ><label for="radioTest[Q<%=i%>][<%-k%>][0]"></label></td>
+                              <td><input type="radio" id="radioTest[Q<%=i%>][<%-k%>][1]" name="answer[subAnswers][Q<%=i%>][<%-k%>]" value="1" ><label for="radioTest[Q<%=i%>][<%-k%>][1]"></label></td>
+                              <td><input type="radio" id="radioTest[Q<%=i%>][<%-k%>][2]" name="answer[subAnswers][Q<%=i%>][<%-k%>]" value="2"><label  for="radioTest[Q<%=i%>][<%-k%>][2]"></label></td>
+                              <td><input type="radio" id="radioTest[Q<%=i%>][<%-k%>][3]" name="answer[subAnswers][Q<%=i%>][<%-k%>]" value="3" ><label for="radioTest[Q<%=i%>][<%-k%>][3]"></label></td>
+                              <td><input type="radio" id="radioTest[Q<%=i%>][<%-k%>][4]" name="answer[subAnswers][Q<%=i%>][<%-k%>]" value="4" ><label for="radioTest[Q<%=i%>][<%-k%>][4]"></label></td>
+                            </tr>
+                         <% }) %>
+                         </table>
+                        </div>
+                        
                 <% } %>
-                <% }) %>
+                        
+                        
                  <input id="loadOptionQuestionTime[Q<%=i%>]" type="text" name="answer[answers][<%=i%>][loadOptionTime]" value="" >
                  <script>
                     var loadOptionEndTime = performance.now();
@@ -237,6 +255,9 @@
         function nextQuestion() {
             console.log(skipIdMap)
             JCounter++;
+            console.log('-----------------------',submit);
+            console.log('-------------------lastIndex', lastIndex)
+            console.log(serverData)
             if(!submit) {
                 var actualArrayIndex = 0;
                 var skipIdQsnFound = false;
@@ -412,6 +433,7 @@
             //console.log(forPrevious)
             //console.log(previousGroup)
             respondBeginTime = performance.now();
+           lastIndex = forPrevious[forPrevious.length-1]
         }
         function updateCurrentSkip(skipId, id) {
             if(skipId)
