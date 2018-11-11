@@ -156,16 +156,19 @@
                 <!--Sub questions - revised in 9/23-->
                 <strong> <%= question.SubQtext %>  </strong>
                 
+                <br></br>
+                
                 
                  <div style="overflow-x:auto;">
                         <table>
                         <tr>
                             <th>&nbsp;</th>
-                            <th>Strongly Disagree</th>
-                            <th>Disagree</th>
-                            <th>Neither Agree nor Disagree</th>
-                            <th>Agree</th>
-                            <th>Strongly Agree</th>
+                            <th>Much more effective</th>
+                            <th>Somewhat more effective</th>
+                            <th>Equally effective</th>
+                            <th>Somewhat less effective</th>
+                            <th>Much less effective</th>
+                            <th>I don't know</th>
                         </tr>
                          <%question.SubOptions.forEach(function(SubOption,k) {%>
                             <tr>
@@ -175,6 +178,7 @@
                               <td><input type="radio" id="radioTest[Q<%=i%>][<%-k%>][2]" name="answer[subAnswers][Q<%=i%>][<%-k%>]" value="2"><label  for="radioTest[Q<%=i%>][<%-k%>][2]"></label></td>
                               <td><input type="radio" id="radioTest[Q<%=i%>][<%-k%>][3]" name="answer[subAnswers][Q<%=i%>][<%-k%>]" value="3" ><label for="radioTest[Q<%=i%>][<%-k%>][3]"></label></td>
                               <td><input type="radio" id="radioTest[Q<%=i%>][<%-k%>][4]" name="answer[subAnswers][Q<%=i%>][<%-k%>]" value="4" ><label for="radioTest[Q<%=i%>][<%-k%>][4]"></label></td>
+                              <td><input type="radio" id="radioTest[Q<%=i%>][<%-k%>][5]" name="answer[subAnswers][Q<%=i%>][<%-k%>]" value="5" ><label for="radioTest[Q<%=i%>][<%-k%>][5]"></label></td>
                             </tr>
                          <% }) %>
                          </table>
@@ -183,7 +187,7 @@
                 <% } %>
                         
                         
-                 <input id="loadOptionQuestionTime[Q<%=i%>]" type="text" name="answer[answers][<%=i%>][loadOptionTime]" value="" >
+                 <input id="loadOptionQuestionTime[Q<%=i%>]" type="text" name="answer[answers][<%=i%>][loadOptionTime]" value="" style="display: none;">
                  <script>
                     var loadOptionEndTime = performance.now();
                     LoadOptionTime =(( (loadOptionEndTime - loadOptionBeginTime)/1000) % 60);
@@ -222,6 +226,7 @@
         var submit = false;
         var skipIdMap = {};
         var lastIndex = 0;
+        
         //function that begin answer after write document.
         function beginAnswer(){
           var customExceptMin = document.getElementById("customExceptTime").value;
@@ -253,15 +258,18 @@
         
         //function for next button.
         function nextQuestion() {
-            console.log(skipIdMap)
+         
             JCounter++;
             console.log('-----------------------',submit);
             console.log('-------------------lastIndex', lastIndex)
-            console.log(serverData)
+           // console.log(serverData)
+         
             if(!submit) {
                 var actualArrayIndex = 0;
                 var skipIdQsnFound = false;
                 var groupQsnFound=0;
+                if(skipIdMap.lastIndex) 
+                        currentSkipId = skipIdMap[lastIndex] || 0;
                 document.getElementById("question"+lastIndex).style.display="none";
               skipIdMap.lastIndex = currentSkipId;
               console.log(skipIdMap)
